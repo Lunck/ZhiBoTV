@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.example.phone.zhibotv.BaseFragment;
 import com.example.phone.zhibotv.R;
+import com.example.phone.zhibotv.adapters.SaiShiContentAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
@@ -29,11 +30,19 @@ public class SaishiContentFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+        setupView();
+    }
+
+    private void setupView() {
+
     }
 
     private void initView() {
         refreshListView = ((PullToRefreshListView) inflate.findViewById(R.id.saishi_content_listview));
         mListView = refreshListView.getRefreshableView();
+        SaiShiContentAdapter contentAdapter = new SaiShiContentAdapter(getActivity(),null,R.layout.saishi_one_item,R.layout.saishi_two_item);
+        mListView.setAdapter(contentAdapter);
+
 
     }
 }

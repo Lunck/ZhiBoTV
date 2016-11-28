@@ -27,8 +27,17 @@ public class SaiShiContenModel {
     private String category;
     private int type;
     private String scheduleIcon;
+    private int time;
     private List<SaiShiContentModelAnchors> anchors;
     private List<SaiShiContentModelSourceList> sourceList;
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
 
     public String getId() {
         return id;
