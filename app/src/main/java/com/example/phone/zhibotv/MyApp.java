@@ -19,8 +19,6 @@ public class MyApp extends Application {
         OkHttpClient client = new OkHttpClient.Builder().build();
         OkHttpUtils.initClient(client);
         Picasso build = new Picasso.Builder(this)
-                .indicatorsEnabled(true)
-                .loggingEnabled(true)
                 .build();
         Picasso.setSingletonInstance(build);
     }

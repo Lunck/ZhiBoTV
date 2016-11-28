@@ -3,6 +3,7 @@ package com.example.phone.zhibotv.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class SaiShiViewPagerAdapter extends FragmentPagerAdapter {
         this.fragmentList=fragmentList;
         this.titleList=titleList;
     }
+
 
     @Override
     public CharSequence getPageTitle(int position) {

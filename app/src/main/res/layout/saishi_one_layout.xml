@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
    <LinearLayout
        android:layout_width="match_parent"
-       android:layout_height="35dp"
+       android:layout_height="33dp"
        android:orientation="horizontal">
        <android.support.design.widget.TabLayout
            android:id="@+id/saishi_tablayout"
@@ -20,9 +20,67 @@
            android:padding="3dp"/>
    </LinearLayout>
     <RadioGroup
+        android:id="@+id/saishi_time_radiogroup"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#edecec">
+        <RadioButton
+            android:id="@+id/saishi_btn1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:checked="true"
+            android:text="今天"
+            android:textColor="@drawable/saishi_time_selector"/>
+        <RadioButton
+            android:id="@+id/saishi_btn2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="今天"
+            android:textColor="@drawable/saishi_time_selector"/>
+        <RadioButton
+            android:id="@+id/saishi_btn3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="今天"
+            android:textColor="@drawable/saishi_time_selector"/>
+        <RadioButton
+            android:id="@+id/saishi_btn4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="今天"
+            android:textColor="@drawable/saishi_time_selector"/>
+        <RadioButton
+            android:id="@+id/saishi_btn5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="今天"
+            android:textColor="@drawable/saishi_time_selector"/>
+        <RadioButton
+            android:id="@+id/saishi_btn6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="今天"
+            android:textColor="@drawable/saishi_time_selector"/>
+
     </RadioGroup>
     <android.support.v4.view.ViewPager
         android:id="@+id/saizhi_viewpager"

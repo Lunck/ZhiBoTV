@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.phone.zhibotv.BaseFragment;
 import com.example.phone.zhibotv.R;
@@ -21,7 +23,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -29,13 +34,13 @@ import okhttp3.Call;
 /**
  * Created by Administrator on 2016-11-28.
  */
-public class SaiShiOneFragment extends BaseFragment {
+public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener {
     public static final String TAG=SaiShiOneFragment.class.getSimpleName();
     private TabLayout mTablayout;
     private ViewPager mViewPager;
     private List<Fragment> fragmentList;
     private List<String>  titleList;
-    private PullToRefreshListView refreshListView;
+    private RadioGroup mRadiogroup;
 
     @Nullable
     @Override
@@ -80,6 +85,7 @@ public class SaiShiOneFragment extends BaseFragment {
                         mTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
                         mViewPager.setAdapter(pagerAdapter);
                         mTablayout.setupWithViewPager(mViewPager);
+
                     }
                 });
     }
@@ -87,6 +93,22 @@ public class SaiShiOneFragment extends BaseFragment {
     private void initView() {
         mTablayout = ((TabLayout) inflate.findViewById(R.id.saishi_tablayout));
         mViewPager = ((ViewPager) inflate.findViewById(R.id.saizhi_viewpager));
+        mRadiogroup = ((RadioGroup) inflate.findViewById(R.id.saishi_time_radiogroup));
+        Date date = new Date();
+        Log.e(TAG, "initView: "+date );
+        for (int i = 0; i < mRadiogroup.getChildCount(); i++) {
+            if (i>0) {
+                RadioButton button = (RadioButton) mRadiogroup.getChildAt(i);
+                button.setText(android.text.format.DateFormat.format("MM/dd",date.getTime()+(86400000*i)));
+            }
+        }
+        mRadiogroup.setOnCheckedChangeListener(this);
+    }
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+
+        }
     }
 }
