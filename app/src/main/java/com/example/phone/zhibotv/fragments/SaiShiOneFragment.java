@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class SaiShiOneFragment extends BaseFragment {
 
 
     private void setupView() {
+        Log.e(TAG, "setupView: " );
         OkHttpUtils.get()
                 .url(UrlUtils.SAISHI_TITLE_URL)
                 .build()
@@ -73,10 +75,11 @@ public class SaiShiOneFragment extends BaseFragment {
                             fragmentList.add(contentFragment);
                             titleList.add(typeList.get(i).getName());
                         }
+                        Log.e(TAG, "onResponse: " );
                         SaiShiViewPagerAdapter pagerAdapter = new SaiShiViewPagerAdapter(getChildFragmentManager(),fragmentList,titleList);
-                        mTablayout.setupWithViewPager(mViewPager);
                         mTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
                         mViewPager.setAdapter(pagerAdapter);
+                        mTablayout.setupWithViewPager(mViewPager);
                     }
                 });
     }
