@@ -5,20 +5,28 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.phone.zhibotv.fragments.GuanZhuFragemnt;
 import com.example.phone.zhibotv.fragments.MyFragment;
 import com.example.phone.zhibotv.fragments.SaiShiFragment;
 import com.example.phone.zhibotv.fragments.ShouYeFragment;
+import com.example.phone.zhibotv.widget.SelectPopWindow;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
 
     private Fragment showFragment;
     private RadioGroup mRadioGroup;
+    private ImageButton mImageBtn;
+
+    private SelectPopWindow menuWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +42,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 
     private void initView() {
+        mImageBtn = (ImageButton) findViewById(R.id.main_img_btn);
+        mImageBtn.setOnClickListener(this);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -88,4 +98,32 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         }
         transaction.commit();
     }
+
+    @Override
+    public void onClick(View v) {
+        menuWindow = new SelectPopWindow(this, itemsOnClick);
+        menuWindow.showAtLocation(this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
+    private View.OnClickListener itemsOnClick = new View.OnClickListener(){
+
+        public void onClick(View v) {
+            menuWindow.dismiss();
+            switch (v.getId()) {
+                case R.id.image_btn_qq:
+                    Toast.makeText(MainActivity.this, "QQ", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.image_btn_weichat:
+                    Toast.makeText(MainActivity.this, "微信", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.image_btn_sina:
+                    Toast.makeText(MainActivity.this, "微博", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+
+    };
 }

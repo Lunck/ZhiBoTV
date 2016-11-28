@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.phone.zhibotv.MainActivity">
+
     <FrameLayout
         android:id="@+id/main_framelayout"
         android:layout_width="match_parent"
@@ -61,8 +62,15 @@
             android:text="我的"/>
     </RadioGroup>
     <ImageButton
+        android:id="@+id/main_img_btn"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:background="@drawable/denglu_button_seletor"
         android:layout_gravity="bottom|center"/>
+    <FrameLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        />
 </FrameLayout>
