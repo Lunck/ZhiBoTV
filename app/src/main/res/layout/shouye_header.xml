@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v4.view.ViewPager
-        android:id="@+id/header_tj_vp"
+        android:id="@+id/shouye_header_vp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/header_tj_vp"
+        android:layout_alignBottom="@id/shouye_header_vp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
         <TextView
@@ -24,7 +24,7 @@
             android:ellipsize="end"
             android:textColor="#ffffff"/>
         <LinearLayout
-            android:id="@+id/indicators"
+            android:id="@+id/shouye_header_indicators"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -33,11 +33,11 @@
         </LinearLayout>
     </LinearLayout>
     <HorizontalScrollView
-        android:id="@+id/header_tj_hsv"
+        android:id="@+id/shouye_header_hsv"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:scrollbars="none"
-        android:layout_below="@id/header_tj_vp">
+        android:layout_below="@id/shouye_header_vp">
 
         <LinearLayout
             android:layout_width="wrap_content"
