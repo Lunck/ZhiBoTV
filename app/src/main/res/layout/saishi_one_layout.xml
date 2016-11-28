@@ -7,14 +7,25 @@
        android:layout_height="35dp"
        android:orientation="horizontal">
        <android.support.design.widget.TabLayout
+           android:id="@+id/saishi_tablayout"
            android:layout_width="0dp"
            android:layout_weight="6"
            android:layout_height="match_parent"/>
-       <TextView
+       <ImageView
+           android:id="@+id/saishi_more"
            android:layout_width="0dp"
            android:layout_height="match_parent"
-           android:layout_weight="1"/>
-
-
+           android:layout_weight="1"
+           android:src="@mipmap/tab_more"
+           android:padding="3dp"/>
    </LinearLayout>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal">
+    </RadioGroup>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/saizhi_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
