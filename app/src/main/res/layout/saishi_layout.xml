@@ -24,13 +24,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
             <RadioButton
                 android:id="@+id/saishi_btn"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:text="赛事"
+                android:background="@drawable/saishi_button_selector"
+                android:textColor="@drawable/saishi_button_background"
                 android:button="@null"
                 android:gravity="center"
                 android:checked="true"
@@ -39,10 +42,12 @@
             <RadioButton
                 android:id="@+id/zhubo_btn"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:text="主播"
                 android:button="@null"
+                android:background="@drawable/zhubo_button_selector"
+                android:textColor="@drawable/saishi_button_background"
                 android:gravity="center"/>
 
         </RadioGroup>
