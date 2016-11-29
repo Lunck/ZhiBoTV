@@ -39,6 +39,7 @@ public abstract class BaseMultTypeAdapter<T> extends BaseAdapter {
     }
     public void addRes(List<T> data){
         if (data!=null) {
+            this.data.clear();
             this.data.addAll(data);
             notifyDataSetChanged();
         }

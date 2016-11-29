@@ -11,12 +11,17 @@ import android.widget.ListView;
 import com.example.phone.zhibotv.BaseFragment;
 import com.example.phone.zhibotv.R;
 import com.example.phone.zhibotv.adapters.SaiShiContentAdapter;
+import com.example.phone.zhibotv.events.SaiShiEvent;
 import com.example.phone.zhibotv.model.SaiShiContentData;
 import com.example.phone.zhibotv.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import okhttp3.Call;
 
@@ -28,6 +33,7 @@ public class SaishiContentFragment extends BaseFragment {
     private PullToRefreshListView refreshListView;
     private ListView mListView;
     private SaiShiContentAdapter contentAdapter;
+    private String url="";
 
     @Nullable
     @Override
@@ -40,12 +46,12 @@ public class SaishiContentFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
-        setupView();
     }
 
-    private void setupView() {
+    private void setupView(String url) {
+        Log.e(TAG, "setupView: "+url );
         OkHttpUtils.get()
-                .url(UrlUtils.SAISHI_HEADER_URL)
+                .url(url)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -71,5 +77,21 @@ public class SaishiContentFragment extends BaseFragment {
         mListView.setAdapter(contentAdapter);
 
 
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN ,sticky = true)
+    public void onEvent(SaiShiEvent event){
+        url=event.getMsg();
+        setupView(url);
     }
 }
