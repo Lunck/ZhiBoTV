@@ -32,7 +32,6 @@ public class SaiShiContentAdapter extends BaseMultTypeAdapter<SaiShiContenModel>
     @Override
     public void bindData(ViewHolder holder, SaiShiContenModel item, int position) {
         holder.itemView.setOnClickListener(this);
-        holder.itemView.setTag(position);
         switch (item.getType()) {
             case 0:
                 ImageView leftImage = (ImageView) holder.getView(R.id.saishi_item_two_leftIcon);

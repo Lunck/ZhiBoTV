@@ -6,12 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.phone.zhibotv.BaseFragment;
 import com.example.phone.zhibotv.R;
 import com.example.phone.zhibotv.adapters.SaiShiContentAdapter;
 import com.example.phone.zhibotv.events.SaiShiEvent;
+import com.example.phone.zhibotv.model.SaiShiContenModel;
 import com.example.phone.zhibotv.model.SaiShiContentData;
 import com.example.phone.zhibotv.utils.UrlUtils;
 import com.google.gson.Gson;
@@ -23,17 +25,21 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.Call;
 
 /**
  * Created by Administrator on 2016-11-28.
  */
-public class SaishiContentFragment extends BaseFragment {
+public class SaishiContentFragment extends BaseFragment implements AdapterView.OnItemClickListener {
     public static final String TAG=SaishiContentFragment.class.getSimpleName();
     private PullToRefreshListView refreshListView;
     private ListView mListView;
     private SaiShiContentAdapter contentAdapter;
     private String url="";
+    private List<SaiShiContenModel> data;
 
     @Nullable
     @Override
@@ -45,6 +51,7 @@ public class SaishiContentFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        data=new ArrayList<>();
         initView();
     }
 
@@ -66,6 +73,7 @@ public class SaishiContentFragment extends BaseFragment {
                         SaiShiContentData contentData = gson.fromJson(response, SaiShiContentData.class);
                         Log.e(TAG, "onResponse: "+contentData.getData().getScheduleList().toString());
                         contentAdapter.addRes(contentData.getData().getScheduleList());
+                        data=contentData.getData().getScheduleList();
                     }
                 });
     }
@@ -75,6 +83,9 @@ public class SaishiContentFragment extends BaseFragment {
         mListView = refreshListView.getRefreshableView();
         contentAdapter = new SaiShiContentAdapter(getActivity(),null,R.layout.saishi_two_item,R.layout.saishi_one_item);
         mListView.setAdapter(contentAdapter);
+        View emptyView = inflate.findViewById(R.id.saishi_empty_view);
+        mListView.setEmptyView(emptyView);
+        mListView.setOnItemClickListener(this);
 
 
     }
@@ -95,6 +106,11 @@ public class SaishiContentFragment extends BaseFragment {
             url=event.getMsg();
             setupView(url);
         }
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
 }

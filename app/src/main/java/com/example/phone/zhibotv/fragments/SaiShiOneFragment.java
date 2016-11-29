@@ -29,6 +29,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -128,7 +129,8 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
             }
         }
         mRadiogroup.setOnCheckedChangeListener(this);
-    }
+
+}
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -192,5 +194,28 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.saishi_one_viewgroup,new SaiShiMoreFragment(),SaiShiMoreFragment.TAG);
         transaction.commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode=ThreadMode.MAIN,sticky = true)
+    public void onEvent(SaiShiEvent event){
+        if (event.what==110) {
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            Fragment fragmentByTag = manager.findFragmentByTag(SaiShiMoreFragment.TAG);
+            FragmentTransaction fragmentTransaction = manager.beginTransaction();
+            fragmentTransaction.remove(fragmentByTag);
+            fragmentTransaction.commit();
+            mViewPager.setCurrentItem(event.getPosition());
+        }
     }
 }

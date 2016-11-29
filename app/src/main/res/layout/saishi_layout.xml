@@ -14,6 +14,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="2"
             android:gravity="center"
+            android:textSize="20sp"
             android:text="直播TV"
             android:textColor="#fff" />
 
@@ -49,20 +50,21 @@
                 android:gravity="center"/>
 
         </RadioGroup>
-        <TextView
+        <ImageView
             android:id="@+id/saishi_search"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="28dp"
             android:layout_weight="1"
-            android:text="搜索"
-            android:gravity="center"/>
-        <TextView
+            android:src="@mipmap/sousuo"
+            android:layout_gravity="center"
+            />
+        <ImageView
             android:id="@+id/saishi_saoyisao"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="32dp"
             android:layout_weight="1"
-            android:text="扫一扫"
-            android:gravity="center"
+            android:src="@mipmap/saoyisao"
+            android:layout_gravity="center"
             />
     </LinearLayout>
     <FrameLayout

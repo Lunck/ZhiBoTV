@@ -9,5 +9,12 @@
         android:background="#edecec"
         android:divider="@null"
         />
+    <TextView
+        android:id="@+id/saishi_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:text="暂无比赛数据！"/>
 
 </LinearLayout>

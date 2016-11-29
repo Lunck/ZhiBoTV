@@ -34,7 +34,13 @@
         <activity android:name=".ZhuBoActivity" />
         <activity android:name=".DengLuActivity" />
         <activity android:name=".ZhuCeActivity" />
-        <activity android:name=".SwipActivity"></activity>
+        <activity android:name=".SwipActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".NowZhiboActivity" />
+        <activity android:name=".PEactivity" />
+        <activity android:name=".ZhuBoActivity" />
+        <activity android:name=".SaiShiZhuBoActivity" />
+        <activity android:name=".SaiShiWebActivity"></activity>
     </application>
 
 </manifest>
