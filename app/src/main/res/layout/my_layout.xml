@@ -17,12 +17,14 @@
             android:background="#569fd7"
             >
         <ImageView
+            android:id="@+id/my_image_denglu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/lp_defult_avatar"
             android:layout_marginLeft="20dp"
             />
             <TextView
+                android:id="@+id/my_text_denglu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"

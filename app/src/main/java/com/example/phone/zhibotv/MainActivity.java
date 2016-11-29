@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,19 +14,31 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.phone.zhibotv.event.MessageEvent;
 import com.example.phone.zhibotv.fragments.GuanZhuFragemnt;
 import com.example.phone.zhibotv.fragments.MyFragment;
 import com.example.phone.zhibotv.fragments.SaiShiFragment;
 import com.example.phone.zhibotv.fragments.ShouYeFragment;
 import com.example.phone.zhibotv.widget.SelectPopWindow;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
+
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener,PlatformActionListener {
 
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private Fragment showFragment;
     private RadioGroup mRadioGroup;
     private ImageButton mImageBtn;
@@ -114,13 +127,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             menuWindow.dismiss();
             switch (v.getId()) {
                 case R.id.image_btn_qq:
-                    Toast.makeText(MainActivity.this, "QQ", Toast.LENGTH_SHORT).show();
+                    login(QQ.NAME);
                     break;
                 case R.id.image_btn_weichat:
-                    Toast.makeText(MainActivity.this, "微信", Toast.LENGTH_SHORT).show();
+                    login(Wechat.NAME);
                     break;
                 case R.id.image_btn_sina:
-                    Toast.makeText(MainActivity.this, "微博", Toast.LENGTH_SHORT).show();
+                    login(SinaWeibo.NAME);
                     break;
                 case R.id.btn_zhuce:
                     Intent intent2 = new Intent(MainActivity.this, ZhuCeActivity.class);
@@ -152,5 +165,29 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         }
         return super.onKeyDown(keyCode, event);
+    }
+    private void login(String name) {
+        ShareSDK.initSDK(this);
+        Platform platform = ShareSDK.getPlatform(this, name);
+        platform.setPlatformActionListener(this);
+        platform.authorize();
+        platform.showUser(null);
+    }
+
+    @Override
+    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+        MessageEvent messageEvent = new MessageEvent(platform.getDb().getUserIcon(),platform.getDb().getUserName());
+        Log.e(TAG, "onComplete: "+messageEvent );
+        EventBus.getDefault().post(messageEvent);
+    }
+
+    @Override
+    public void onError(Platform platform, int i, Throwable throwable) {
+
+    }
+
+    @Override
+    public void onCancel(Platform platform, int i) {
+
     }
 }

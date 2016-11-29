@@ -15,7 +15,6 @@ import com.example.phone.zhibotv.adapters.SaiShiContentAdapter;
 import com.example.phone.zhibotv.events.SaiShiEvent;
 import com.example.phone.zhibotv.model.SaiShiContenModel;
 import com.example.phone.zhibotv.model.SaiShiContentData;
-import com.example.phone.zhibotv.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zhy.http.okhttp.OkHttpUtils;

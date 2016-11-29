@@ -30,9 +30,9 @@
         <ImageView
             android:id="@+id/guanzhu_search"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_weight="1"
-            android:src="@mipmap/search"
+            android:src="@mipmap/sousuo"
             android:gravity="center"/>
         <ImageView
             android:id="@+id/guanzhu_saoyisao"
