@@ -20,6 +20,7 @@
         android:src="@mipmap/huitui"
         />
     <EditText
+        android:id="@+id/search_ed"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_weight="5"
@@ -29,6 +30,7 @@
         android:background="@drawable/edit_text_style"
         />
     <ImageView
+        android:id="@+id/search_search"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_weight="1"

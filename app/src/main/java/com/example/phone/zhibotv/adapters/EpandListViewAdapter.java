@@ -143,25 +143,25 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
         // 加载数据
         Picasso.with(holder.bigimg1.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getImgUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.common_loading3)
                 .error(R.mipmap.ic_launcher)
                 .into(holder.bigimg1);
         Log.e(TAG, "getChildView: "+"http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getImgUrl());
         Picasso.with(holder.smallimg1.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getPicUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.common_loading3)
                 .error(R.mipmap.ic_launcher)
                 .transform(new CropCircleTransformation())
                 .into(holder.smallimg1);
         Log.e(TAG, "getChildView: "+"http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getPicUrl());
         Picasso.with(holder.bigimg2.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition+1).getImgUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.common_loading3)
                 .error(R.mipmap.ic_launcher)
                 .into(holder.bigimg2);
         Picasso.with(holder.smallimg2.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition+1).getPicUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.common_loading3)
                 .error(R.mipmap.ic_launcher)
                 .transform(new CropCircleTransformation())
                 .into(holder.smallimg2);
@@ -198,11 +198,23 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
         }else {
             holder.seximg2.setBackgroundResource(R.mipmap.boy);
         }
+        if ("0".equals( data.get(groupPosition).getData().get(2*childPosition).getLiveStatus())) {
+            holder.status1.setText("录播");
+        }else{
+            holder.status1.setText("直播");
+        }
+        if ("0".equals( data.get(groupPosition).getData().get(2*childPosition+1).getLiveStatus())) {
+            holder.status2.setText("录播");
+        }else{
+            holder.status2.setText("直播");
+        }
         holder.relayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context,ZhuBoActivity.class);
                 intent.putExtra("roomid",data.get(groupPosition).getData().get(2*childPosition).getRoomId());
+                intent.putExtra("title",data.get(groupPosition).getData().get(childPosition).getTitle());
+                intent.putExtra("status",data.get(groupPosition).getData().get(childPosition).getLiveStatus());
                 context.startActivity(intent);
             }
         });
@@ -210,7 +222,7 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
         holder.relayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, PEactivity.class);
+                Intent intent=new Intent(context, ZhuBoActivity.class);
                 intent.putExtra("roomid",data.get(groupPosition).getData().get(2*childPosition+1).getRoomId());
                 context.startActivity(intent);
             }
@@ -236,7 +248,7 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
 
     private static class ViewHolderChild{
         RelativeLayout relayout1,relayout2;
-        TextView title1,caryge1,num1,title2,caryge2,num2;
+        TextView title1,caryge1,num1,title2,caryge2,num2,status1,status2;
         ImageView bigimg1,smallimg1,levelimg1,seximg1,bigimg2,smallimg2,levelimg2,seximg2;
         public ViewHolderChild(View itemView){
             bigimg1= (ImageView) itemView.findViewById(R.id.item_item_img);
@@ -255,7 +267,8 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
             num2= (TextView) itemView.findViewById(R.id.item_item_tv6);
             relayout1= (RelativeLayout) itemView.findViewById(R.id.item_item_relayout1);
             relayout2= (RelativeLayout) itemView.findViewById(R.id.item_item_relayout2);
-
+            status1= (TextView) itemView.findViewById(R.id.item_item_tv7);
+            status2= (TextView) itemView.findViewById(R.id.item_item_tv8);
         }
 
     }

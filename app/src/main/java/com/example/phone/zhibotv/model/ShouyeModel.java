@@ -399,6 +399,11 @@ public class ShouyeModel {
             private String title;
             private String type;
 
+            public ScrollBean(String imgUrl, String title) {
+                this.imgUrl = imgUrl;
+                this.title = title;
+            }
+
             public String getContent() {
                 return content;
             }
