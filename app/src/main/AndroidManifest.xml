@@ -29,6 +29,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".NowZhiboActivity"></activity>
+        <activity android:name=".PEactivity"></activity>
+        <activity android:name=".ZhuBoActivity"></activity>
     </application>
 
 </manifest>
