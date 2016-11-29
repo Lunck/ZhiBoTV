@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.phone.zhibotv.BaseFragment;
 import com.example.phone.zhibotv.R;
 import com.example.phone.zhibotv.SearchActivity;
+import com.example.phone.zhibotv.SwipActivity;
 import com.example.phone.zhibotv.model.BigGuanZhuModel;
 import com.example.phone.zhibotv.utils.UrlUtils;
 import com.google.gson.Gson;
@@ -109,7 +110,7 @@ public class GuanZhuFragemnt extends BaseFragment implements View.OnClickListene
         mFocus = ((ImageView) inflate.findViewById(R.id.guanzhu_search));
         mFocus.setOnClickListener(this);
 
-        mText= (TextView) inflate.findViewById(R.id.text_swip_result);
+        //mText= (TextView) inflate.findViewById(R.id.text_swip_result);
 
         mLinearLayout = (LinearLayout) inflate.findViewById(R.id.lilayout_scroll);
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -138,7 +139,9 @@ public class GuanZhuFragemnt extends BaseFragment implements View.OnClickListene
         if (resultCode == RESULT_OK) {
             if (requestCode == QR_REQUEST_CODE) {
                 String extra = data.getStringExtra(CaptureActivity.RESULT);
-                mText.setText(extra);
+                Intent intent = new Intent(getActivity(), SwipActivity.class);
+                intent.putExtra("result",extra);
+                startActivity(intent);
             }
         }
 
