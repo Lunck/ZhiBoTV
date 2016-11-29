@@ -35,7 +35,7 @@
     <HorizontalScrollView
         android:id="@+id/shouye_header_hsv"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="120dp"
         android:scrollbars="none"
         android:layout_below="@id/shouye_header_vp">
 
