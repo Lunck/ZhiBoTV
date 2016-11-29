@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
@@ -18,6 +19,8 @@ import com.example.phone.zhibotv.fragments.ShouYeFragment;
 import com.example.phone.zhibotv.widget.SelectPopWindow;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
@@ -27,7 +30,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private ImageButton mImageBtn;
 
     private SelectPopWindow menuWindow;
-
+    private boolean isExit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,9 +124,24 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 default:
                     break;
             }
-
+        }
+    };
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode== KeyEvent.KEYCODE_BACK) {
+            if (!isExit) {
+                isExit=true;
+                Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        isExit=false;
+                    }
+                },3*1000);
+                return true;
+            }
 
         }
-
-    };
+        return super.onKeyDown(keyCode, event);
+    }
 }

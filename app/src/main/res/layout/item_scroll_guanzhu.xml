@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_scroll_ll"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:focusableInTouchMode="true"
+    >
+
+    <ImageView
+        android:id="@+id/image_zhubo_guanzhu"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@mipmap/ic_launcher"
+        />
+    <TextView
+        android:id="@+id/text_zhubo_guanzhu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="主播"
+        />
+    <Button
+        android:id="@+id/btn_guanzhu"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:text="关注"
+        android:textColor="#37a0e6"
+        android:background="@drawable/guanzhu_btn_style"
+        />
+</LinearLayout>

@@ -35,31 +35,15 @@
     <HorizontalScrollView
         android:id="@+id/shouye_header_hsv"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:scrollbars="none"
         android:layout_below="@id/shouye_header_vp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_contianer"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
-                android:id="@+id/ll_img_container"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                ></LinearLayout>
-            <LinearLayout
-                android:id="@+id/ll_tv_container"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                ></LinearLayout>
-            <LinearLayout
-                android:id="@+id/ll_tv2_container"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:orientation="horizontal"></LinearLayout>
+            android:orientation="horizontal">
         </LinearLayout>
     </HorizontalScrollView>
 

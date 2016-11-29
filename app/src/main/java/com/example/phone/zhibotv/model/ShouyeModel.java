@@ -15,7 +15,6 @@ public class ShouyeModel {
 
     private DataBeanX data;
     private int status;
-
     public DataBeanX getData() {
         return data;
     }

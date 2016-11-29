@@ -18,8 +18,11 @@ public class MyApp extends Application {
         super.onCreate();
         OkHttpClient client = new OkHttpClient.Builder().build();
         OkHttpUtils.initClient(client);
-        Picasso build = new Picasso.Builder(this)
+        Picasso picasso = new Picasso.Builder(this)
+                .loggingEnabled(true)
+                // RGB565 可以配置全局的图片加载质量
+                .defaultBitmapConfig(Bitmap.Config.RGB_565)
                 .build();
-        Picasso.setSingletonInstance(build);
+        Picasso.setSingletonInstance(picasso);
     }
 }

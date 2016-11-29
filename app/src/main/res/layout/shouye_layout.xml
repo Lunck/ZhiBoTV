@@ -5,7 +5,8 @@
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="55dp"
-       android:orientation="horizontal">
+       android:orientation="horizontal"
+       android:background="#636edf">
        <ImageView
            android:id="@+id/shouye_title"
            android:layout_width="0dp"
@@ -16,6 +17,8 @@
            android:id="@+id/shouye_search"
            android:layout_width="55dp"
            android:layout_height="55dp"
+           android:padding="5dp"
+           android:src="@mipmap/shouye_search"
            />
        <ImageView
            android:id="@+id/shouye_saosao"
@@ -23,8 +26,9 @@
            android:layout_height="55dp"
            />
    </LinearLayout>
-    <ListView
+    <com.example.phone.zhibotv.pulltorefreshexpandlistview.XExpandListview
         android:id="@+id/shouye_lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"/>
 </LinearLayout>
