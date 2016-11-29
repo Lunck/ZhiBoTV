@@ -2,6 +2,7 @@ package com.example.phone.zhibotv.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,6 +37,8 @@ public class SelectPopWindow extends PopupWindow {
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setFocusable(true);
         this.setAnimationStyle(R.anim.anim_bottom);
+        ColorDrawable dw = new ColorDrawable(0xb0000000);
+        this.setBackgroundDrawable(dw);
 
         mMenuView.setOnTouchListener(new View.OnTouchListener() {
 

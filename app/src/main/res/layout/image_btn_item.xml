@@ -2,20 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pop_layout"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="190dp"
+    android:layout_height="200dp"
     android:background="#ffffff"
     >
      <TextView
          android:layout_width="match_parent"
          android:layout_height="25dp"
-         android:text="登陆后更精彩"
+         android:text="登录后更精彩"
          android:layout_marginLeft="10dp"
          android:gravity="center_vertical"
+         android:layout_marginTop="8dp"
          />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         >

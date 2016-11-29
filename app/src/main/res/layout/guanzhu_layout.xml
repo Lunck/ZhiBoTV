@@ -4,9 +4,105 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="关注" />
+        android:layout_height="55dp"
+        android:background="#2581f9"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="直播TV"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/text_swip_result"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            />
+        <ImageView
+            android:id="@+id/guanzhu_search"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@mipmap/search"
+            android:gravity="center"/>
+        <ImageView
+            android:id="@+id/guanzhu_saoyisao"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@mipmap/swip"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="#e1dede"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:src="@mipmap/shu"
+          android:layout_marginLeft="10dp"
+          />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="明星主播推荐"
+            android:textColor="#1296db"
+            />
+    </LinearLayout>
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:scrollbars="none"
+        >
+       <LinearLayout
+           android:id="@+id/lilayout_scroll"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="horizontal"
+           >
+
+       </LinearLayout>
+        </HorizontalScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="#e1dede"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/shu"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="精彩节目推荐"
+            android:textColor="#1296db"
+            />
+    </LinearLayout>
 </LinearLayout>
