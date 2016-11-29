@@ -2,6 +2,7 @@ package com.example.phone.zhibotv.adapters;
 
 import android.content.Context;
 import android.text.format.DateFormat;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,7 +21,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 /**
  * Created by Administrator on 2016-11-28.
  */
-public class SaiShiContentAdapter extends BaseMultTypeAdapter<SaiShiContenModel> {
+public class SaiShiContentAdapter extends BaseMultTypeAdapter<SaiShiContenModel> implements View.OnClickListener {
     private Context context;
 
     public SaiShiContentAdapter(Context context, List<SaiShiContenModel> data, int... layoutIds) {
@@ -30,6 +31,8 @@ public class SaiShiContentAdapter extends BaseMultTypeAdapter<SaiShiContenModel>
 
     @Override
     public void bindData(ViewHolder holder, SaiShiContenModel item, int position) {
+        holder.itemView.setOnClickListener(this);
+        holder.itemView.setTag(position);
         switch (item.getType()) {
             case 0:
                 ImageView leftImage = (ImageView) holder.getView(R.id.saishi_item_two_leftIcon);
@@ -101,5 +104,10 @@ public class SaiShiContentAdapter extends BaseMultTypeAdapter<SaiShiContenModel>
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

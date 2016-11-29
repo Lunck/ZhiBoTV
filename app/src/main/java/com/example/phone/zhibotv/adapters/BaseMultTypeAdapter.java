@@ -106,7 +106,7 @@ public abstract class BaseMultTypeAdapter<T> extends BaseAdapter {
     public abstract void bindData(ViewHolder holder, T item, int position);
 
     protected static class ViewHolder {
-        private View itemView;
+        public View itemView;
         private Map<Integer, View> cacheViews;
 
         public ViewHolder(View itemView) {
