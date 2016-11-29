@@ -15,7 +15,7 @@
     <ImageView
         android:id="@+id/search_back"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:layout_weight="1"
         android:src="@mipmap/huitui"
         />
@@ -24,7 +24,8 @@
         android:layout_height="45dp"
         android:layout_weight="5"
         android:hint="请输入主播房间ID/主播名称"
-        android:textColorHint="#878585"
+        android:textColorHint="#bebcbc"
+        android:textCursorDrawable="@null"
         android:background="@drawable/edit_text_style"
         />
     <ImageView

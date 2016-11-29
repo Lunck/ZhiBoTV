@@ -28,10 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchActivity"></activity>
-        <activity android:name=".NowZhiboActivity"></activity>
-        <activity android:name=".PEactivity"></activity>
-        <activity android:name=".ZhuBoActivity"></activity>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".NowZhiboActivity" />
+        <activity android:name=".PEactivity" />
+        <activity android:name=".ZhuBoActivity" />
+        <activity android:name=".DengLuActivity" />
+        <activity android:name=".ZhuCeActivity" />
+        <activity android:name=".SwipActivity"></activity>
     </application>
 
 </manifest>
