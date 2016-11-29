@@ -8,4 +8,5 @@ public class UrlUtils {
     public static final String BASE_URL="http://www.zhibo.tv";
     public static final String SAISHI_HEADER_URL="http://www.zhibo.tv/app/schedule/getScheduleList/typeId/";
     public static final String SAISHI_FOOTER_URL="/time/";
+    public static final String ZHUBO_URL="http://www.zhibo.tv/app/schedule/getmorecategory";
 }

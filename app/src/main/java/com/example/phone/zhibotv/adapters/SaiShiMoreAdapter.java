@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.phone.zhibotv.R;
+import com.example.phone.zhibotv.model.SaiShiTabTitleModel;
 import com.example.phone.zhibotv.model.ZhuBoModel;
 
 import java.util.ArrayList;
@@ -17,11 +18,11 @@ import java.util.List;
 /**
  * Created by Administrator on 2016-11-28.
  */
-public class ZhuBoRecyclerAdapter extends RecyclerView.Adapter<ZhuBoRecyclerAdapter.ViewHolder> {
-    private List<ZhuBoModel> data;
+public class SaiShiMoreAdapter extends RecyclerView.Adapter<SaiShiMoreAdapter.ViewHolder> {
+    private List<SaiShiTabTitleModel> data;
     private LayoutInflater inflater;
 
-    public ZhuBoRecyclerAdapter(Context context,List<ZhuBoModel> data) {
+    public SaiShiMoreAdapter(Context context, List<SaiShiTabTitleModel> data) {
         inflater=LayoutInflater.from(context);
         if (data!=null) {
             this.data = data;
@@ -30,7 +31,7 @@ public class ZhuBoRecyclerAdapter extends RecyclerView.Adapter<ZhuBoRecyclerAdap
         }
 
     }
-    public void addRes(List<ZhuBoModel> data){
+    public void addRes(List<SaiShiTabTitleModel> data){
         if (data!=null) {
             this.data.addAll(data);
             notifyDataSetChanged();
@@ -50,7 +51,7 @@ public class ZhuBoRecyclerAdapter extends RecyclerView.Adapter<ZhuBoRecyclerAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.text.setText(data.get(position).getpName());
+        holder.text.setText(data.get(position).getName());
     }
 
 

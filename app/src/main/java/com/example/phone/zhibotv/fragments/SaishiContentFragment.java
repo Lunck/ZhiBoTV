@@ -91,7 +91,10 @@ public class SaishiContentFragment extends BaseFragment {
     }
     @Subscribe(threadMode = ThreadMode.MAIN ,sticky = true)
     public void onEvent(SaiShiEvent event){
-        url=event.getMsg();
-        setupView(url);
+        if (event.what==100) {
+            url=event.getMsg();
+            setupView(url);
+        }
+
     }
 }

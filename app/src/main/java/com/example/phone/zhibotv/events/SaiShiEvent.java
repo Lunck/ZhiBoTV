@@ -5,7 +5,7 @@ package com.example.phone.zhibotv.events;
  */
 public class SaiShiEvent {
     private String msg;
-    private final int what;
+    public final int what;
 
     public SaiShiEvent(int what) {
         this.what = what;

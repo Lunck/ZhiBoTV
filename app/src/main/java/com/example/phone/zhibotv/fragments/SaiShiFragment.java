@@ -42,6 +42,7 @@ public class SaiShiFragment extends BaseFragment implements RadioGroup.OnChecked
         showFragment = new SaiShiOneFragment();
         transaction.add(R.id.saishi_fragment,showFragment,SaiShiOneFragment.TAG);
         transaction.commit();
+
     }
 
     @Override

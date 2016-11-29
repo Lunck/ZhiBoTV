@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -37,7 +40,7 @@ import okhttp3.Call;
 /**
  * Created by Administrator on 2016-11-28.
  */
-public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener, TabLayout.OnTabSelectedListener {
+public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener, TabLayout.OnTabSelectedListener, View.OnClickListener {
     public static final String TAG=SaiShiOneFragment.class.getSimpleName();
     private TabLayout mTablayout;
     private ViewPager mViewPager;
@@ -49,11 +52,14 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
     private String type="0";
     private List<SaiShiTabTitleModel> typeList;
     private String url;
+    private ImageView mMore;
+    private ViewGroup container;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         inflate=inflater.inflate(R.layout.saishi_one_layout,container,false);
+        inflate=inflater.inflate(R.layout.saishi_one_layout,container,false);
+        this.container=container;
         return inflate;
     }
 
@@ -104,8 +110,8 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
         mTablayout = ((TabLayout) inflate.findViewById(R.id.saishi_tablayout));
         mViewPager = ((ViewPager) inflate.findViewById(R.id.saizhi_viewpager));
         mRadiogroup = ((RadioGroup) inflate.findViewById(R.id.saishi_time_radiogroup));
-
-
+        mMore = ((ImageView) inflate.findViewById(R.id.saishi_more));
+        mMore.setOnClickListener(this);
 
         date = new Date();
         time=android.text.format.DateFormat.format("yyyy-MM-dd",date.getTime())+"";
@@ -180,5 +186,11 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
     }
 
 
-
+    @Override
+    public void onClick(View v) {
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.saishi_one_viewgroup,new SaiShiMoreFragment(),SaiShiMoreFragment.TAG);
+        transaction.commit();
+    }
 }
