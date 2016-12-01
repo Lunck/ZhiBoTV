@@ -35,7 +35,7 @@
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="" />
+        android:layout_height="30dp" />
     <HorizontalScrollView
         android:id="@+id/shouye_header_hsv"
         android:layout_width="match_parent"
