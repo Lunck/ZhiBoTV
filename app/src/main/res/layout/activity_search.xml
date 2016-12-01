@@ -22,26 +22,59 @@
     <EditText
         android:id="@+id/search_ed"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:layout_weight="5"
         android:hint="请输入主播房间ID/主播名称"
         android:textColorHint="#bebcbc"
         android:textCursorDrawable="@null"
-        android:background="@drawable/edit_text_style"
+        android:background="#ffff"
         />
     <ImageView
         android:id="@+id/search_search"
         android:layout_width="0dp"
         android:layout_height="40dp"
+        android:padding="5dp"
         android:layout_weight="1"
         android:src="@mipmap/sousuo"
         />
-
 </LinearLayout>
+    <LinearLayout
+        android:id="@+id/delete_history"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="历史搜索"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"/>
+        <ImageView
+            android:id="@+id/delete_data"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/delete"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#c9c1c1" />
+    <ListView
+        android:id="@+id/search_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
     <TextView
+        android:id="@+id/search_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="您目前没有播放历史"
         android:gravity="center"
         />
+
 </LinearLayout>

@@ -18,35 +18,103 @@
             >
         <ImageView
             android:id="@+id/my_image_denglu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@mipmap/lp_defult_avatar"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             />
-            <TextView
-                android:id="@+id/my_text_denglu"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ffffff"
-                android:text="点击登录..."
-                android:layout_marginLeft="20dp"
-                />
+                android:layout_height="90dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="12dp"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                    android:id="@+id/yonghuming_denglu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="1"
+                    android:drawableRight="@mipmap/rich0"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:id="@+id/my_text_denglu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:text="点击登录..."
+                    android:gravity="center"
+                    />
+                <LinearLayout
+                    android:id="@+id/bobi_denglu_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/lp_bo_coin"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="0"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:layout_marginLeft="5dp"
+                        />
+                    <TextView
+                        android:layout_width="3dp"
+                        android:layout_height="match_parent"
+                        android:text="|"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:layout_marginLeft="5dp"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/lp_bo_beans"
+                        android:gravity="center"
+                        android:layout_marginLeft="5dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="0"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:layout_marginLeft="5dp"
+                        />
+                </LinearLayout>
+            </LinearLayout>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="150dp"
+                android:id="@+id/denglu_tiaozhuan"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="90dp"
                 android:src="@mipmap/main_more"
                 />
         </LinearLayout>
+
         <RadioGroup
+            android:id="@+id/rb_paly"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="90dp"
             android:orientation="horizontal"
             android:gravity="center"
             >
             <RadioButton
+                android:id="@+id/rb_item_history"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableTop="@mipmap/lp_user_histroy_icon"
@@ -54,8 +122,9 @@
                 android:gravity="center"
                 />
             <RadioButton
+                android:id="@+id/rb_item_task"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableTop="@mipmap/lp_user_task_icon"
@@ -63,8 +132,9 @@
                 android:gravity="center"
                 />
             <RadioButton
+                android:id="@+id/btn_item_chongzhi"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableTop="@mipmap/lp_user_rechange_icon"
@@ -78,6 +148,7 @@
             android:background="#cecdcd"
             />
         <LinearLayout
+            android:id="@+id/my_message"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -109,6 +180,7 @@
             android:layout_marginLeft="20dp"
             />
         <LinearLayout
+            android:id="@+id/my_fensi"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -140,6 +212,7 @@
             android:layout_marginLeft="20dp"
             />
         <LinearLayout
+            android:id="@+id/my_focus"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -170,6 +243,7 @@
             android:background="#cecdcd"
             />
         <LinearLayout
+            android:id="@+id/kaibo_tixing"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -201,6 +275,7 @@
             android:layout_marginLeft="20dp"
             />
         <LinearLayout
+            android:id="@+id/weixin_jiangli"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -232,6 +307,7 @@
             android:layout_marginLeft="20dp"
             />
         <LinearLayout
+            android:id="@+id/my_shouyi"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -262,6 +338,7 @@
             android:background="#cecdcd"
             />
         <LinearLayout
+            android:id="@+id/shezhi"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"

@@ -18,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-public class ZhuBoActivity extends AppCompatActivity implements View.OnClickListener {
+import com.example.phone.zhibotv.R;
+
+public class HostActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView mBack;
     private TextView mZhubotv;
@@ -34,7 +36,23 @@ public class ZhuBoActivity extends AppCompatActivity implements View.OnClickList
         initView();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.qingxi,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        switch (id) {
+            case R.id.biaoqing:
+                break;
+            case R.id.gaoqing:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void initView() {
         mBack = (ImageView) findViewById(R.id.zhubo_back);
@@ -42,11 +60,8 @@ public class ZhuBoActivity extends AppCompatActivity implements View.OnClickList
         mZhuboqingxi = (ImageView) findViewById(R.id.zhubo_qingxi);
         mWebview = (WebView) findViewById(R.id.zhubo_webview);
         Intent intent=getIntent();
-        if ("0".equals(intent.getStringExtra("status"))) {
-            mZhubotv.setText("录播:"+intent.getStringExtra("title"));
-        }else {
-            mZhubotv.setText("直播:"+intent.getStringExtra("title"));
-        }
+        mZhubotv.setText(intent.getStringExtra("title"));
+        mZhubotv.setText(intent.getStringExtra("title"));
         WebSettings settings = mWebview.getSettings();
         settings.setJavaScriptEnabled(true);
         mWebview.setWebViewClient(new WebViewClient());
@@ -54,9 +69,7 @@ public class ZhuBoActivity extends AppCompatActivity implements View.OnClickList
         mBack.setOnClickListener(this);
         mZhuboqingxi.setOnClickListener(this);
         initPopu();
-
     }
-
     private void initPopu() {
         contentview = LayoutInflater.from(this).inflate(R.layout.zhubopopu,null);
         popupWindow = new PopupWindow(contentview, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -67,7 +80,7 @@ public class ZhuBoActivity extends AppCompatActivity implements View.OnClickList
         biaoqing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               popupWindow.dismiss();
+                popupWindow.dismiss();
             }
         });
         gaoqing.setOnClickListener(new View.OnClickListener() {
@@ -83,27 +96,14 @@ public class ZhuBoActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.zhubo_back:
-                 finish();
+                finish();
                 break;
             case R.id.zhubo_qingxi:
-               /* PopupMenu popupMenu=new PopupMenu(this,mZhuboqingxi);
+                /*PopupMenu popupMenu=new PopupMenu(this,v);
                 this.getMenuInflater().inflate(R.menu.qingxi,popupMenu.getMenu());
-                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                     @Override
-                     public boolean onMenuItemClick(MenuItem item) {
-                         switch (item.getItemId()) {
-                             case R.id.biaoqing:
-                                 break;
-                             case R.id.gaoqing:
-                                 break;
-                         }
-                         return false;
-                     }
-                 });
                 popupMenu.show();*/
-                popupWindow.showAtLocation(contentview, Gravity.TOP|Gravity.RIGHT,-400,130);
+                popupWindow.showAtLocation(contentview, Gravity.TOP|Gravity.RIGHT,-300,130);
                 break;
         }
     }
-
 }

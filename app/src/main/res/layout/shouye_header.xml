@@ -30,9 +30,18 @@
             android:layout_height="10dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:paddingBottom="5dp">
+            >
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/shouye_header_vp"
+        android:text="主播推荐"
+        android:textSize="15sp"
+        android:gravity="center_vertical"
+        android:textColor="#4964ea"
+        android:padding="5dp"/>
     <HorizontalScrollView
         android:id="@+id/shouye_header_hsv"
         android:layout_width="match_parent"

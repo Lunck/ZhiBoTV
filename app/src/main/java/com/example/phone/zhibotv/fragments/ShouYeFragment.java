@@ -2,6 +2,7 @@ package com.example.phone.zhibotv.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -22,11 +23,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.phone.zhibotv.BaseFragment;
+import com.example.phone.zhibotv.HostActivity;
 import com.example.phone.zhibotv.R;
 import com.example.phone.zhibotv.SearchActivity;
 import com.example.phone.zhibotv.ZhuBoActivity;
 import com.example.phone.zhibotv.adapters.EpandListViewAdapter;
 import com.example.phone.zhibotv.adapters.ShouyeImagePagerAdapter;
+import com.example.phone.zhibotv.model.Chazhao;
 import com.example.phone.zhibotv.model.ShouyeModel;
 import com.example.phone.zhibotv.pulltorefreshexpandlistview.XExpandListview;
 import com.google.gson.Gson;
@@ -37,6 +40,10 @@ import com.rock.qrcodelibrary.CaptureActivity;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.xutils.DbManager;
+import org.xutils.ex.DbException;
+import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,6 +87,11 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
     List<ShouyeModel.DataBeanX.ScrollBean>srcoll;
     private ImageView mSearch;
     private ImageView mSaosao;
+    public DbManager.DaoConfig config=new DbManager.DaoConfig()
+            .setDbName("historys.db")
+            .setAllowTransaction(true)
+            .setDbDir(Environment.getExternalStorageDirectory())
+            .setDbVersion(1);
 
     @Nullable
     @Override
@@ -110,10 +122,12 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
 
                     @Override
                     public void onResponse(String response, int id) {
+                       DbManager db=x.getDb(config);
                         Gson gson=new Gson();
                         ShouyeModel srcollShouye=gson.fromJson(response,ShouyeModel.class);
                         final List<ShouyeModel.DataBeanX.HotsBean>list=srcollShouye.getData().getHots();
                         for (int i = 0; i < list.size(); i++) {
+                            Chazhao chazhao = new Chazhao();
                             Log.e(TAG, "onResponse: "+list.size() );
                             final View inflate1 = LayoutInflater.from(getActivity()).inflate(R.layout.srcollitem,null);
                            ImageView mLlimg = (ImageView) inflate1.findViewById(R.id.ll_img);
@@ -123,7 +137,7 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
                             Picasso.with(mLlimg.getContext())
                                     .load("http://www.zhibo.tv"+list.get(i).getPicUrl())
                                     .placeholder(R.drawable.common_loading3)
-                                    .error(R.mipmap.ic_launcher)
+                                    .error(R.mipmap.lp_defult_avatar)
                                     .transform(new CropCircleTransformation())
                                     .into(mLlimg);
                             mLlText1.setText(list.get(i).getNickname());
@@ -135,11 +149,28 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
                             layout.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent=new Intent(getActivity(), ZhuBoActivity.class);
+                                    Intent intent=new Intent(getActivity(), HostActivity.class);
                                     intent.putExtra("roomid",list.get(finalI).getRoomId());
+                                    intent.putExtra("title",list.get(finalI).getTitle());
+
                                     startActivity(intent);
                                 }
                             });
+                            chazhao.setRoomid(list.get(i).getRoomId());
+                            chazhao.setNickname(list.get(i).getNickname());
+                            chazhao.setTitle(list.get(i).getTitle());
+                            try {
+                                List<Chazhao>huizong=db.selector(Chazhao.class).where("roomid","=",list.get(i).getRoomId()).findAll();
+                               boolean b=(huizong==null);
+
+                                Log.e(TAG, "onResponse: "+b );
+                                if (huizong==null||huizong.size()==0) {
+                                    db.saveOrUpdate(chazhao);
+                                }
+
+                            } catch (DbException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                     }
@@ -156,12 +187,14 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
                     }
                     @Override
                     public void onResponse(String response, int id) {
+                        DbManager db=x.getDb(config);
                         Log.e(TAG, "onResponse: " +response);
                         Gson gson=new Gson();
                         shouyeModel = gson.fromJson(response,ShouyeModel.class);
                         Log.e(TAG, "onResponse: "+shouyeModel);
                         List<ShouyeModel.DataBeanX.CategoryBean>data=new ArrayList<ShouyeModel.DataBeanX.CategoryBean>();
                         for (int i = 0; i < shouyeModel.getData().getCategory().size(); i++) {
+                            Chazhao chazhao = new Chazhao();
                             ShouyeModel.DataBeanX.CategoryBean parent=new ShouyeModel.DataBeanX.CategoryBean();
                             parent.setName(shouyeModel.getData().getCategory().get(i).getName());
                             parent.setId(shouyeModel.getData().getCategory().get(i).getId());
@@ -178,10 +211,28 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
                                 child.setRoomId(shouyeModel.getData().getCategory().get(i).getData().get(j).getRoomId());
                                 child.setLiveStatus(shouyeModel.getData().getCategory().get(i).getData().get(j).getLiveStatus());
                                 children.add(child);
+                                chazhao.setRoomid(shouyeModel.getData().getCategory().get(i).getData().get(j).getRoomId());
+                                chazhao.setNickname(shouyeModel.getData().getCategory().get(i).getData().get(j).getNickname());
+                                chazhao.setTitle(shouyeModel.getData().getCategory().get(i).getData().get(j).getTitle());
+                                try {
+                                    List<Chazhao>huizong=db.selector(Chazhao.class).where("roomid","=",shouyeModel.getData().getCategory().get(i).getData().get(j).getRoomId()).findAll();
+                                    boolean b=(huizong==null);
+
+                                    Log.e(TAG, "onResponse: "+b);
+                                    if (huizong==null||huizong.size()==0) {
+                                        db.saveOrUpdate(chazhao);
+                                    }
+
+                                } catch (DbException e) {
+                                    e.printStackTrace();
+                                }
+
+
                             }
                             parent.setData(children);
                             data.add(parent);
                             Log.e(TAG, "onResponse: "+data.size() );
+
                         }
 
                         adapter.updataRes(data);
@@ -217,8 +268,8 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
                             mIndicators.addView(view);
                             Picasso.with(img.getContext())
                                     .load("http://www.zhibo.tv"+scrollBeen.get(i).getImgUrl())
-                                    .placeholder(R.drawable.common_loading3)
-                                    .error(R.mipmap.ic_launcher)
+                                    .placeholder(R.mipmap.jiazaizhong)
+                                    .error(R.mipmap.jiazaizhong)
                                     .into(img);
                             Log.e(TAG, "onResponse: "+"http://www.zhibo.tv"+scrollBeen.get(i).getImgUrl() );
                             mImager.add(img);
