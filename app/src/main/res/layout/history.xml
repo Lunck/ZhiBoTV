@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
    <TextView
        android:id="@+id/history_tv"
-       android:layout_width="match_parent"
+       android:layout_width="0dp"
        android:layout_height="50dp"
+       android:layout_weight="1"
        android:text="nihao"
        android:textSize="20sp"
        android:gravity="center_vertical"
        android:layout_marginLeft="10dp"
+       />
+   <ImageView
+       android:id="@+id/history_delete"
+       android:layout_width="20dp"
+       android:layout_height="20dp"
+       android:layout_marginTop="15dp"
+       android:layout_marginRight="10dp"
+       android:layout_marginLeft="5dp"
+       android:src="@mipmap/everydelete"
        />
 </LinearLayout>
