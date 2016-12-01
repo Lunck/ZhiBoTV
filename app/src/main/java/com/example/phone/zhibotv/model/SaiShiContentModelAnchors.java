@@ -4,7 +4,7 @@ package com.example.phone.zhibotv.model;
  * Created by Administrator on 2016-11-28.
  */
 public class SaiShiContentModelAnchors {
-    /* "uname":"台球联盟",
+    /*                  "uname":"台球联盟",
                         "uemail":"tv7@zhibo.tv",
                         "usname":"s_384665",
                         "uhimgb":"/uploads/imgs/2016/05-20/6297196a33318b71e2aba48a82fc63cft.jpg",

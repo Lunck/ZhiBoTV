@@ -39,6 +39,11 @@ public abstract class RecyclerViewMultAdapter<T> extends RecyclerView.Adapter<Re
         mDatas.addAll(datas);
         notifyDataSetChanged();
     }
+    public void upDatas(ArrayList<T> datas) {
+        mDatas.clear();
+        mDatas.addAll(datas);
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemViewType(int position) {

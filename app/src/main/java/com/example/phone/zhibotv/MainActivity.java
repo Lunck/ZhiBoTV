@@ -118,9 +118,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onClick(View v) {
+        onSelectPopWindow();
+    }
+
+    public void onSelectPopWindow() {
         menuWindow = new SelectPopWindow(this, itemsOnClick);
         menuWindow.showAtLocation(this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
     }
+
     private View.OnClickListener itemsOnClick = new View.OnClickListener(){
 
         public void onClick(View v) {

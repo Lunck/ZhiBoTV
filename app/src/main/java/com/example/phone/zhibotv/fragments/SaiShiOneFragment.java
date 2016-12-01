@@ -1,6 +1,7 @@
 package com.example.phone.zhibotv.fragments;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.phone.zhibotv.BaseFragment;
 import com.example.phone.zhibotv.R;
@@ -30,6 +32,9 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.DbManager;
+import org.xutils.ex.DbException;
+import org.xutils.x;
 
 import java.util.ArrayList;
 
@@ -55,6 +60,13 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
     private String url;
     private ImageView mMore;
     private ViewGroup container;
+    private View popwindow;
+    private TextView mBack;
+    public DbManager.DaoConfig config=new DbManager.DaoConfig()
+            .setDbName("historys.db")
+            .setAllowTransaction(true)
+            .setDbDir(Environment.getExternalStorageDirectory())
+            .setDbVersion(1);
 
     @Nullable
     @Override
@@ -70,7 +82,32 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
         fragmentList=new ArrayList<>();
         titleList=new ArrayList<>();
         initView();
-        setupView();
+        getDataFromDb();
+
+    }
+
+    private void getDataFromDb() {
+        DbManager db = x.getDb(config);
+        try {
+            typeList = db.selector(SaiShiTabTitleModel.class).findAll();
+            if (typeList!=null&&typeList.size()!=0) {
+                for (int i = 0; i < typeList.size(); i++) {
+                    SaishiContentFragment contentFragment = new SaishiContentFragment();
+                    fragmentList.add(contentFragment);
+                    titleList.add(typeList.get(i).getName());
+                }
+                SaiShiViewPagerAdapter pagerAdapter = new SaiShiViewPagerAdapter(getChildFragmentManager(),fragmentList,titleList);
+                mTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                mViewPager.setAdapter(pagerAdapter);
+                mTablayout.setupWithViewPager(mViewPager);
+                mTablayout.setOnTabSelectedListener(SaiShiOneFragment.this);
+            }else {
+                setupView();
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+            setupView();
+        }
     }
 
 
@@ -90,13 +127,18 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
                         Gson gson = new Gson();
                         SaiShiTabTitleData titleData = gson.fromJson(response, SaiShiTabTitleData.class);
                         typeList = titleData.getData().getTypeList();
+                        DbManager db = x.getDb(config);
                         for (int i = 0; i < typeList.size(); i++) {
                             SaishiContentFragment contentFragment = new SaishiContentFragment();
                             fragmentList.add(contentFragment);
                             titleList.add(typeList.get(i).getName());
+                            try {
+                                db.saveOrUpdate(typeList.get(i));
+                            } catch (DbException e) {
+                                e.printStackTrace();
+                            }
                         }
                         Log.e(TAG, "onResponse: " );
-
                         SaiShiViewPagerAdapter pagerAdapter = new SaiShiViewPagerAdapter(getChildFragmentManager(),fragmentList,titleList);
                         mTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
                         mViewPager.setAdapter(pagerAdapter);
@@ -110,6 +152,7 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
     private void initView() {
         mTablayout = ((TabLayout) inflate.findViewById(R.id.saishi_tablayout));
         mViewPager = ((ViewPager) inflate.findViewById(R.id.saizhi_viewpager));
+        //mViewPager.setOffscreenPageLimit(1);
         mRadiogroup = ((RadioGroup) inflate.findViewById(R.id.saishi_time_radiogroup));
         mMore = ((ImageView) inflate.findViewById(R.id.saishi_more));
         mMore.setOnClickListener(this);
@@ -129,29 +172,38 @@ public class SaiShiOneFragment extends BaseFragment implements RadioGroup.OnChec
             }
         }
         mRadiogroup.setOnCheckedChangeListener(this);
+        //mTablayout.setOnTabSelectedListener(SaiShiOneFragment.this);
 
-}
+
+    }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+        SaiShiEvent event1 = new SaiShiEvent(120);
+        SaiShiEvent event2 = new SaiShiEvent(130);
         switch (checkedId) {
             case R.id.saishi_btn1:
+                EventBus.getDefault().postSticky(event2);
                 time= android.text.format.DateFormat.format("yyyy-MM-dd",date.getTime())+"";
                 break;
             case R.id.saishi_btn2:
+                EventBus.getDefault().postSticky(event1);
                 time= android.text.format.DateFormat.format("yyyy-MM-dd",date.getTime()+(86400000))+"";
                 break;
             case R.id.saishi_btn3:
+                EventBus.getDefault().postSticky(event1);
                 time= android.text.format.DateFormat.format("yyyy-MM-dd",date.getTime()+(86400000*2))+"";
                 break;
             case R.id.saishi_btn4:
+                EventBus.getDefault().postSticky(event1);
                 time= android.text.format.DateFormat.format("yyyy-MM-dd",date.getTime()+(86400000*3))+"";
                 break;
             case R.id.saishi_btn5:
+                EventBus.getDefault().postSticky(event1);
                 time= android.text.format.DateFormat.format("yyyy-MM-dd",date.getTime()+(86400000*4))+"";
                 break;
             case R.id.saishi_btn6:
+                EventBus.getDefault().postSticky(event1);
                 time= android.text.format.DateFormat.format("yyyy-MM-dd",date.getTime()+(86400000*5))+"";
                 break;
         }

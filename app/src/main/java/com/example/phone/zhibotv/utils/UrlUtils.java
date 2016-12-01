@@ -12,6 +12,7 @@ public class UrlUtils {
     public static final String GUANZHU_URL="http://www.zhibo.tv/app/user/getappuservoucha";
     public static final String IMAGE_BASE_URL="http://www.zhibo.tv/";
 
-    public static final String ZHUBO_CONTENT_HEADER="http://www.zhibo.tv/app/index/loadmore?page=1&id=";
+    public static final String ZHUBO_CONTENT_HEADER="http://www.zhibo.tv/app/index/loadmore?page=";
+    public static final String ZHUBO_CONTENT_MODLE="&id=";
     public static final String ZHUBO_CONTENT_FOOTER="&equipment=1&size=20";
 }
