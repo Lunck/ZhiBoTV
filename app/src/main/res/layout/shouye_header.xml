@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@id/shouye_header_vp"
-        android:text="sizi"/>
+        android:text="HAIKEYI"/>
     <HorizontalScrollView
         android:id="@+id/shouye_header_hsv"
         android:layout_width="match_parent"
