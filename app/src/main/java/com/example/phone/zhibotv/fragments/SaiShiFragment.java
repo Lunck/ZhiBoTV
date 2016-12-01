@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 
 import com.example.phone.zhibotv.BaseFragment;
 import com.example.phone.zhibotv.R;
+import com.example.phone.zhibotv.SearchActivity;
 import com.rock.qrcodelibrary.CaptureActivity;
 
 /**
@@ -96,7 +97,8 @@ public class SaiShiFragment extends BaseFragment implements RadioGroup.OnChecked
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.saishi_search:
-
+                Intent intent1 = new Intent(getActivity(), SearchActivity.class);
+                getActivity().startActivity(intent1);
                 break;
 
             case R.id.saishi_saoyisao:

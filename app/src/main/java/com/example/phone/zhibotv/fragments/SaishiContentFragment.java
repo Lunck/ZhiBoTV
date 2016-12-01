@@ -32,7 +32,7 @@ import com.example.phone.zhibotv.ZhuCeActivity;
 import com.example.phone.zhibotv.adapters.HudongAdapter;
 import com.example.phone.zhibotv.adapters.SaiShiContentAdapter;
 import com.example.phone.zhibotv.adapters.ZhiBoAdapter;
-import com.example.phone.zhibotv.event.MessageEvent;
+import com.example.phone.zhibotv.events.MessageEvent;
 import com.example.phone.zhibotv.events.SaiShiEvent;
 import com.example.phone.zhibotv.model.SaiShiContenModel;
 import com.example.phone.zhibotv.model.SaiShiContentData;
@@ -280,9 +280,14 @@ public class SaishiContentFragment extends BaseFragment implements AdapterView.O
 
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-        MessageEvent messageEvent = new MessageEvent(platform.getDb().getUserIcon(),platform.getDb().getUserName());
-        Log.e(TAG, "onComplete: "+messageEvent );
-        EventBus.getDefault().post(messageEvent);
+        SharedPreferences preferences = getActivity().getSharedPreferences("pass_on",
+                getActivity().MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name", platform.getDb().getUserName());
+        editor.putString("icon", platform.getDb().getUserIcon());
+        editor.putBoolean("isDengLu", true);
+        editor.commit();
+
     }
 
     @Override
