@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -239,11 +240,12 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
         return true;
     }
     private static class ViewHolderParent{
-        TextView name,gengduo;
+        TextView name;
+        LinearLayout gengduo;
 
         public ViewHolderParent(View itemView){
             name = (TextView) itemView.findViewById(R.id.shouye_lv_item_tv);
-            gengduo= (TextView) itemView.findViewById(R.id.item_item_gengduo);
+            gengduo= (LinearLayout) itemView.findViewById(R.id.item_item_gengduo);
 
         }
     }

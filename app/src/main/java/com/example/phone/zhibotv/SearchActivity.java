@@ -1,7 +1,9 @@
 package com.example.phone.zhibotv;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,7 +46,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private TextView empty;
     private LinearLayout mAlldelete;
     private ImageView mDelete;
-
+    private  AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_search);
         initView();
         setupView();
+        intitDialog();
     }
 
     private void initView() {
@@ -144,10 +147,42 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.delete_data:
                 DbManager db1=x.getDb(config);
+                alertDialog.show();
 
         }
     }
+    private void intitDialog() {
+        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setIcon(R.mipmap.kelian);
+        builder.setTitle("删除");
+        builder.setMessage("你确定要全部删除吗？？");
+        builder.setCancelable(false);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DbManager db = x.getDb(config);
+                try {
+                    List<History> all = db.selector(History.class).findAll();
+                    for (History date:all) {
+                        db.delete(date);
+                    }
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
 
+                setupView();
+
+            }
+
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog=builder.create();
+    }
     @Override
     protected void onResume() {
         super.onResume();
