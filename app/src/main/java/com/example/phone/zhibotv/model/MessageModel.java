@@ -1,18 +1,11 @@
-package com.example.phone.zhibotv.event;
+package com.example.phone.zhibotv.model;
 
 /**
  * Created by Administrator on 2016/11/29.
  */
-public class MessageEvent {
-
+public class MessageModel {
     private String icon;
     private String name;
-
-    public MessageEvent(String icon, String name) {
-        this.icon = icon;
-        this.name = name;
-    }
-
     public String getIcon() {
         return icon;
     }
@@ -28,5 +21,4 @@ public class MessageEvent {
     public void setName(String name) {
         this.name = name;
     }
-
 }
