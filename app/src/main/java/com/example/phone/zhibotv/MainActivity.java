@@ -2,11 +2,11 @@ package com.example.phone.zhibotv;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,14 +14,11 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.phone.zhibotv.event.MessageEvent;
 import com.example.phone.zhibotv.fragments.GuanZhuFragemnt;
 import com.example.phone.zhibotv.fragments.MyFragment;
 import com.example.phone.zhibotv.fragments.SaiShiFragment;
 import com.example.phone.zhibotv.fragments.ShouYeFragment;
 import com.example.phone.zhibotv.widget.SelectPopWindow;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -45,6 +42,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     private SelectPopWindow menuWindow;
     private boolean isExit;
+    private boolean Clickbale;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,8 +116,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onClick(View v) {
-        menuWindow = new SelectPopWindow(this, itemsOnClick);
-        menuWindow.showAtLocation(this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+//        if (Clickbale) {
+            menuWindow = new SelectPopWindow(this, itemsOnClick);
+            menuWindow.showAtLocation(this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+       /* }else{
+
+        }*/
+
     }
     private View.OnClickListener itemsOnClick = new View.OnClickListener(){
 
@@ -176,9 +179,21 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-        MessageEvent messageEvent = new MessageEvent(platform.getDb().getUserIcon(),platform.getDb().getUserName());
-        Log.e(TAG, "onComplete: "+messageEvent );
+       /* MessageModel model=new MessageModel();
+        model.setIcon(platform.getDb().getUserIcon());
+        model.setName(platform.getDb().getUserName());
+        MessageEvent messageEvent = new MessageEvent(model);
         EventBus.getDefault().post(messageEvent);
+        Log.e(TAG, "onComplete: "+messageEvent );*/
+        SharedPreferences preferences = getSharedPreferences("pass_on",
+                MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name", platform.getDb().getUserName());
+        editor.putString("icon", platform.getDb().getUserIcon());
+        editor.putBoolean("isDengLu", true);
+        editor.commit();
+        SwipFragment(MyFragment.class,MyFragment.TAG);
+       // Clickbale=false;
     }
 
     @Override
