@@ -50,7 +50,7 @@ public class NowAdapter extends BaseAdapter {
 
     public void addRes(List<NowModel.DataBeanX.DataBean> data) {
         if (data != null) {
-            this.data = data;
+            this.data .addAll(data);
             notifyDataSetChanged();
         }
 
@@ -83,26 +83,26 @@ public class NowAdapter extends BaseAdapter {
         }
         Picasso.with(holder.bigimg1.getContext())
                 .load("http://www.zhibo.tv" + data.get(2 * position).getImgUrl())
-                .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.jiazaizhong)
+                .error(R.mipmap.jiazaizhong)
                 .into(holder.bigimg1);
         Log.e(TAG, "getChildView: " + "http://www.zhibo.tv" + data.get(2 * position).getImgUrl());
         Picasso.with(holder.smallimg1.getContext())
                 .load("http://www.zhibo.tv" + data.get(2 * position).getPicUrl())
                 .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.ic_launcher)
+                .error(R.mipmap.jiazaizhong)
                 .transform(new CropCircleTransformation())
                 .into(holder.smallimg1);
         Log.e(TAG, "getChildView: " + "http://www.zhibo.tv" + data.get(2 * position).getPicUrl());
         Picasso.with(holder.bigimg2.getContext())
                 .load("http://www.zhibo.tv" + data.get(2 * position + 1).getImgUrl())
-                .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.jiazaizhong)
+                .error(R.mipmap.jiazaizhong)
                 .into(holder.bigimg2);
         Picasso.with(holder.smallimg2.getContext())
                 .load("http://www.zhibo.tv" + data.get(2 * position + 1).getPicUrl())
                 .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.ic_launcher)
+                .error(R.mipmap.jiazaizhong)
                 .transform(new CropCircleTransformation())
                 .into(holder.smallimg2);
         holder.title1.setText(data.get(2 * position).getTitle());

@@ -30,7 +30,7 @@
             android:layout_height="10dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:paddingBottom="5dp">
+            >
         </LinearLayout>
     </LinearLayout>
     <HorizontalScrollView

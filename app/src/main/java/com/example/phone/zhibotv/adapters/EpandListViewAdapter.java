@@ -143,26 +143,26 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
         // 加载数据
         Picasso.with(holder.bigimg1.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getImgUrl())
-                .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.jiazaizhong)
+                .error(R.mipmap.jiazaizhong)
                 .into(holder.bigimg1);
         Log.e(TAG, "getChildView: "+"http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getImgUrl());
         Picasso.with(holder.smallimg1.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getPicUrl())
                 .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.ic_launcher)
+                .error(R.mipmap.jiazaizhong)
                 .transform(new CropCircleTransformation())
                 .into(holder.smallimg1);
         Log.e(TAG, "getChildView: "+"http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getPicUrl());
         Picasso.with(holder.bigimg2.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition+1).getImgUrl())
-                .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.jiazaizhong)
+                .error(R.mipmap.jiazaizhong)
                 .into(holder.bigimg2);
         Picasso.with(holder.smallimg2.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition+1).getPicUrl())
                 .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.ic_launcher)
+                .error(R.mipmap.jiazaizhong)
                 .transform(new CropCircleTransformation())
                 .into(holder.smallimg2);
         holder.title1.setText(getChild(groupPosition,2*childPosition).getTitle());
@@ -213,8 +213,8 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Intent intent=new Intent(context,ZhuBoActivity.class);
                 intent.putExtra("roomid",data.get(groupPosition).getData().get(2*childPosition).getRoomId());
-                intent.putExtra("title",data.get(groupPosition).getData().get(childPosition).getTitle());
-                intent.putExtra("status",data.get(groupPosition).getData().get(childPosition).getLiveStatus());
+                intent.putExtra("title",data.get(groupPosition).getData().get(2*childPosition).getTitle());
+                intent.putExtra("status",data.get(groupPosition).getData().get(2*childPosition).getLiveStatus());
                 context.startActivity(intent);
             }
         });
@@ -224,6 +224,8 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Intent intent=new Intent(context, ZhuBoActivity.class);
                 intent.putExtra("roomid",data.get(groupPosition).getData().get(2*childPosition+1).getRoomId());
+                intent.putExtra("title",data.get(groupPosition).getData().get(2*childPosition+1).getTitle());
+                intent.putExtra("status",data.get(groupPosition).getData().get(2*childPosition+1).getLiveStatus());
                 context.startActivity(intent);
             }
         });

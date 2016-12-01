@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.OkHttpUtils;
 
+import org.xutils.x;
+
 import okhttp3.OkHttpClient;
 
 
@@ -24,5 +26,6 @@ public class MyApp extends Application {
                 .defaultBitmapConfig(Bitmap.Config.RGB_565)
                 .build();
         Picasso.setSingletonInstance(picasso);
+        x.Ext.init(this);
     }
 }

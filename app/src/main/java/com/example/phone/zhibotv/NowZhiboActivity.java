@@ -38,20 +38,26 @@ public class NowZhiboActivity extends AppCompatActivity implements View.OnClickL
     private SimpleDateFormat format;
     private Date date;
     private String dateStr;
-
+    private int totalpage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_now_zhibo);
         initView();
-        setupView(State.DOWN);
+        setupView(State.DOWN,p);
     }
-    private void setupView(final State state) {
+    private void setupView(final State state,int p) {
+        if (p==totalpage){
+            mRefresh.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+        }
         Log.e(TAG, "setupView: "+TEATHED_URL1+p+TEATHED_URL2+id+TEATHED_URL3 );
+
         OkHttpUtils.get()
                 .url(TEATHED_URL1+p+TEATHED_URL2+id+TEATHED_URL3)
                 .build()
                 .execute(new StringCallback() {
+
+
                     @Override
                     public void onError(Call call, Exception e, int id) {
 
@@ -62,21 +68,19 @@ public class NowZhiboActivity extends AppCompatActivity implements View.OnClickL
                         Gson gson=new Gson();
                         Log.e(TAG, "onResponse: NowAdapter"+response );
                         NowModel nowModel=gson.fromJson(response,NowModel.class);
-                        adapter.updataRes(nowModel.getData().getData());
+                        totalpage = nowModel.getData().getTotalpage();
                         switch (state) {
                             case DOWN:
-                                p=1;
                                 adapter.updataRes(nowModel.getData().getData());
                                 break;
                             case UP:
-                                if (p<nowModel.getData().getTotalpage()){
-                                    ++p;
-                                    adapter.addRes(nowModel.getData().getData());
-                                    break;
-                                }
+                                adapter.addRes(nowModel.getData().getData());
+
+                                break;
+                        }
                                 mRefresh.onRefreshComplete();
                         }
-                    }
+
                 });
     }
 
@@ -117,15 +121,16 @@ public class NowZhiboActivity extends AppCompatActivity implements View.OnClickL
     public void onPullDownToRefresh(PullToRefreshBase refreshView) {
         date = new Date();
         dateStr = format.format(date);
-        loadingLayoutProxy.setLastUpdatedLabel("上次刷新"+dateStr);
-        setupView(State.DOWN);
+        loadingLayoutProxy.setLastUpdatedLabel("上次刷新:"+dateStr);
+        p=1;
+        setupView(State.DOWN,p);
     }
 
-    @Override
-    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-        date = new Date();
-        dateStr = format.format(date);
-        loadingLayoutProxy.setLastUpdatedLabel("上次刷新"+dateStr);
-        setupView(State.UP);
-    }
+        @Override
+        public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+                p+=1;
+                setupView(State.UP,p);
+        }
+
+
 }

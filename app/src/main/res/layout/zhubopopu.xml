@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f8dcaae2">
+<TextView
+    android:id="@+id/biaoqing"
+    android:layout_width="70dp"
+    android:layout_height="30dp"
+    android:text="标清"
+    android:textSize="15sp"
+    android:gravity="center"
+    />
+    <View
+        android:layout_width="70dp"
+        android:layout_height="2dp"
+        android:background="#dd969090"/>
+    <TextView
+        android:id="@+id/gaoqing"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:text="高清"
+        android:textSize="15sp"
+        android:gravity="center"
+        />
+</LinearLayout>
