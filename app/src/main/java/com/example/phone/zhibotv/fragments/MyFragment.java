@@ -124,7 +124,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener,Pla
         iconMessage = preferences.getString("icon", "头像");
         isDenglu = preferences.getBoolean("isDengLu", false);
 
-        isTuiChu = preferences.getBoolean("isTuiChu", false);
+       // isTuiChu = preferences.getBoolean("isTuiChu", false);
         if (isDenglu) {
             passin();
         } else {
@@ -244,10 +244,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener,Pla
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         Log.e(TAG, "onComplete: userId=" + platform.getDb().getUserId());
-        //passin();
+
         Bundle bundle = new Bundle();
-        bundle.putString("icon", message);
-        bundle.putString("name", iconMessage);
+        bundle.putString("icon", platform.getDb().getUserIcon());
+        bundle.putString("name", platform.getDb().getUserName());
         Message msg = mHandler.obtainMessage();
         msg.what = 0x100;
         msg.obj = bundle;
@@ -303,7 +303,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener,Pla
     @Override
     public boolean handleMessage(Message msg) {
         if (msg.what == 0x100) {
-            if (isDenglu) {
                 Bundle bundle = (Bundle) msg.obj;
                 mText1.setVisibility(View.VISIBLE);
                 mText1.setText(bundle.getString("name"));
@@ -311,12 +310,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener,Pla
                 mLinear.setVisibility(View.VISIBLE);
                 mText.setText("直播ID:31297252");
                 mText.setClickable(false);
-            } else {
-                mText1.setVisibility(View.GONE);
-                mLinear.setVisibility(View.GONE);
-                mText.setText("点击登录...");
-                mText.setClickable(true);
-            }
+                isDenglu=true;
         }
         return false;
     }

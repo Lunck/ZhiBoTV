@@ -17,19 +17,19 @@ public class SwipActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swip);
-        result = getIntent().getStringExtra("result");
+        result = getIntent().getStringExtra("roomNum");
         initView();
     }
 
     private void initView() {
-        mBack = (ImageView) findViewById(R.id.search_back);
+        mBack = (ImageView) findViewById(R.id.zhubo_back);
         mBack.setOnClickListener(this);
 
-        mWebView = (WebView) findViewById(R.id.web_swip);
+        mWebView = (WebView) findViewById(R.id.zhubo_webview);
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient());
-        mWebView.loadUrl(result);
+        mWebView.loadUrl("http://www.zhibo.tv/"+result);
     }
 
     @Override

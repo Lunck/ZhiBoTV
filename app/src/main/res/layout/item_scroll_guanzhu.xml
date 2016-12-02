@@ -21,7 +21,7 @@
         />
     <Button
         android:id="@+id/btn_guanzhu"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="25dp"
         android:text="关注"
         android:textColor="#37a0e6"

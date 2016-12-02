@@ -4,6 +4,7 @@ package com.example.phone.zhibotv;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -36,13 +38,16 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int TAKE_PHOTO = 100;
     private Fragment showFragment;
     private RadioGroup mRadioGroup;
     private ImageButton mImageBtn;
 
     private SelectPopWindow menuWindow;
     private boolean isExit;
-    private boolean Clickbale;
+    private boolean isDenglu=false;
+    private RadioButton mRb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         mRadioGroup = (RadioGroup) findViewById(R.id.main_radiogroup);
         mRadioGroup.setOnCheckedChangeListener(this);
+        mRb = (RadioButton) findViewById(R.id.main_wode);
     }
 
     @Override
@@ -116,12 +122,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onClick(View v) {
-//        if (Clickbale) {
-            menuWindow = new SelectPopWindow(this, itemsOnClick);
-            menuWindow.showAtLocation(this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-       /* }else{
-
-        }*/
+           if (isDenglu) {
+               Intent imageCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+               if (imageCapture.resolveActivity(getPackageManager()) != null) {
+                   startActivityForResult(imageCapture, TAKE_PHOTO);
+               }
+           }else {
+                   menuWindow = new SelectPopWindow(this, itemsOnClick);
+                   menuWindow.showAtLocation(this.findViewById(R.id.main), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+               }
 
     }
     private View.OnClickListener itemsOnClick = new View.OnClickListener(){
@@ -178,6 +187,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = getSharedPreferences("pass_on", MODE_PRIVATE);
+        isDenglu = sharedPreferences.getBoolean("isDengLu", false);
+    }
+
+    @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
        /* MessageModel model=new MessageModel();
         model.setIcon(platform.getDb().getUserIcon());
@@ -193,7 +209,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         editor.putBoolean("isDengLu", true);
         editor.commit();
         SwipFragment(MyFragment.class,MyFragment.TAG);
-       // Clickbale=false;
+
     }
 
     @Override
@@ -204,5 +220,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     public void onCancel(Platform platform, int i) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

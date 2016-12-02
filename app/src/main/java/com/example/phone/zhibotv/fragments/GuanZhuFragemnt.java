@@ -41,8 +41,8 @@ public class GuanZhuFragemnt extends BaseFragment implements View.OnClickListene
     private ImageView mFocus;
     private TextView mText;
     private  View coupon_home_ad_item;
-    private Button mBtn;
     private boolean isClick;
+    private  LinearLayout linearLayout;
 
     @Nullable
     @Override
@@ -75,33 +75,51 @@ public class GuanZhuFragemnt extends BaseFragment implements View.OnClickListene
                     }
 
                     @Override
-                    public void onResponse(BigGuanZhuModel response, int id) {
+                    public void onResponse(final BigGuanZhuModel response, int id) {
                         for (int i = 0; i < response.getData().getHosts().size(); i++) {
                             coupon_home_ad_item= LayoutInflater.from(getActivity()).inflate(R.layout.item_scroll_guanzhu, null);
                             coupon_home_ad_item.setLayoutParams(params);
+                            linearLayout= (LinearLayout) coupon_home_ad_item.findViewById(R.id.item_scroll_ll);
                             ImageView mImage =(ImageView) coupon_home_ad_item.findViewById(R.id.image_zhubo_guanzhu);
                             TextView mText =(TextView) coupon_home_ad_item.findViewById(R.id.text_zhubo_guanzhu);
-                            mBtn = ((Button) coupon_home_ad_item.findViewById(R.id.btn_guanzhu));
+                            final Button mBtn = ((Button) coupon_home_ad_item.findViewById(R.id.btn_guanzhu));
+                            mBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Log.e(TAG, "onClick: 我是Button" );
+                                    mBtn.setText("已关注");
+                                }
+                            });
                             mText.setText(response.getData().getHosts().get(i).getName());
                             Picasso.with(getActivity()).load(UrlUtils.IMAGE_BASE_URL+response.getData().getHosts().get(i).getIcon())
                                     .transform(new CropCircleTransformation())
                                     .into(mImage);
                             mLinearLayout.addView(coupon_home_ad_item);
+                           final int finalI = i;
+                            linearLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent=new Intent(getActivity(), SwipActivity.class);
+                                    intent.putExtra("roomNum",response.getData().getHosts().get(finalI).getRoomnum());
+                                    //intent.putExtra("name",response.getData().getHosts().get(finalI).getName());
+                                    startActivity(intent);
+                                }
+                            });
                         }
                     }
                 });
-        for (int i = 0; i < mLinearLayout.getChildCount(); i++) {
-            final View child = mLinearLayout.getChildAt(i);
-            child.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.e(TAG, "onClick: "+mLinearLayout.getChildCount());
-                    Log.e(TAG, "onClick: "+child );
-                }
-            });
-        }
     }
-
+    /*for (int i = 0; i < linearLayout.getChildCount(); i++) {
+        final View child = linearLayout.getChildAt(i);
+        final int finalI = i;
+        child.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "onClick: " + linearLayout.getChildCount());
+                Log.e(TAG, "onClick: " + linearLayout.getChildAt(finalI));
+            }
+        });
+    }*/
     private void initView() {
 
         mSwip = ((ImageView) inflate.findViewById(R.id.guanzhu_saoyisao));
@@ -114,7 +132,7 @@ public class GuanZhuFragemnt extends BaseFragment implements View.OnClickListene
 
         mLinearLayout = (LinearLayout) inflate.findViewById(R.id.lilayout_scroll);
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        params.leftMargin = 10;
+        params.leftMargin = 20;
     }
 
     @Override
@@ -127,9 +145,6 @@ public class GuanZhuFragemnt extends BaseFragment implements View.OnClickListene
             case R.id.guanzhu_search:
                 Intent intentSearch=new Intent(getActivity(),SearchActivity.class);
                 startActivity(intentSearch);
-                break;
-            case R.id.btn_guanzhu:
-                mBtn.setText("已关注");
                 break;
         }
     }
