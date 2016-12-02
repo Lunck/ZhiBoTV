@@ -19,6 +19,7 @@ import com.example.phone.zhibotv.SwipActivity;
 import com.example.phone.zhibotv.model.BigGuanZhuModel;
 import com.example.phone.zhibotv.utils.UrlUtils;
 import com.google.gson.Gson;
+
 import com.rock.qrcodelibrary.CaptureActivity;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -129,7 +130,6 @@ public class GuanZhuFragemnt extends BaseFragment implements View.OnClickListene
         mFocus.setOnClickListener(this);
 
         //mText= (TextView) inflate.findViewById(R.id.text_swip_result);
-
         mLinearLayout = (LinearLayout) inflate.findViewById(R.id.lilayout_scroll);
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.leftMargin = 20;

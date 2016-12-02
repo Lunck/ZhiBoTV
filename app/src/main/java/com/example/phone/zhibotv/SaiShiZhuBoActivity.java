@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +18,22 @@ import com.example.phone.zhibotv.adapters.ZhuBoContentAdapter;
 import com.example.phone.zhibotv.model.ZhuBoContent;
 import com.example.phone.zhibotv.model.ZhuBoContentModel;
 import com.example.phone.zhibotv.utils.UrlUtils;
+import com.example.phone.zhibotv.widget.PullToRefreshRecyclerView;
 import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.Call;
 
-public class SaiShiZhuBoActivity extends AppCompatActivity implements View.OnClickListener, RecyclerViewMultAdapter.OnItemClickListener {
+public class SaiShiZhuBoActivity extends AppCompatActivity implements View.OnClickListener, RecyclerViewMultAdapter.OnItemClickListener,PullToRefreshBase.OnRefreshListener2 {
     public static final String TAG=SaiShiZhuBoActivity.class.getSimpleName();
-    private RecyclerView mRecycler;
+    private PullToRefreshRecyclerView mPullToRefreshRecyclerView;
     private ZhuBoContentAdapter adapter;
     private  String url="";
     private ImageView mBack;
@@ -37,6 +42,11 @@ public class SaiShiZhuBoActivity extends AppCompatActivity implements View.OnCli
     private ImageView mImage;
     private TextView mText;
     private View inflate;
+    private RecyclerView mRecycler;
+    private int totalPage=0;
+    private CharSequence format;
+    private ILoadingLayout loadingLayoutProxy;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +55,25 @@ public class SaiShiZhuBoActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
         url=intent.getStringExtra("url");
         initView();
-        setupView();
+        setupView(State.DOWN);
     }
 
-    private void setupView() {
-        Log.e(TAG, "setupView: "+ UrlUtils.ZHUBO_CONTENT_HEADER+url+UrlUtils.ZHUBO_CONTENT_FOOTER);
+    private void setupView(final State state) {
+
+
+        switch (state) {
+            case DOWN:
+                Date date = new Date();
+                format = DateFormat.format("MM-dd HH:mm:ss",date.getTime());
+                totalPage=1;
+                break;
+            case UP:
+                totalPage++;
+                break;
+        }
+        Log.e(TAG, "setupView: "+ UrlUtils.ZHUBO_CONTENT_HEADER+totalPage+UrlUtils.ZHUBO_CONTENT_MODLE+url+UrlUtils.ZHUBO_CONTENT_FOOTER);
         OkHttpUtils.get()
-                .url(UrlUtils.ZHUBO_CONTENT_HEADER+url+UrlUtils.ZHUBO_CONTENT_FOOTER)
+                .url(UrlUtils.ZHUBO_CONTENT_HEADER+totalPage+UrlUtils.ZHUBO_CONTENT_MODLE+url+UrlUtils.ZHUBO_CONTENT_FOOTER)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -64,12 +86,27 @@ public class SaiShiZhuBoActivity extends AppCompatActivity implements View.OnCli
                         Gson gson = new Gson();
                         ZhuBoContent zhuBoContent = gson.fromJson(response, ZhuBoContent.class);
                         mTitle.setText(zhuBoContent.getData().getName());
+                        if (zhuBoContent.getData().getTotalpage()>1) {
+                            mPullToRefreshRecyclerView.setMode(PullToRefreshBase.Mode.BOTH);
+                        }
+                        if (totalPage==zhuBoContent.getData().getTotalpage()){
+                            mPullToRefreshRecyclerView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        }
                         if (zhuBoContent.getData().getBanner()!=""&&zhuBoContent.getData().getBanner()!=null) {
                             Picasso.with(SaiShiZhuBoActivity.this).load(UrlUtils.BASE_URL+zhuBoContent.getData().getBanner()).into(mImage);
                             mText.setText(zhuBoContent.getData().getBannerDesc());
                             adapter.setHeaderView(inflate);
                         }
-                        adapter.addDatas((ArrayList<ZhuBoContentModel>) zhuBoContent.getData().getData());
+                        switch (state) {
+                            case DOWN:
+                                adapter.upDatas((ArrayList<ZhuBoContentModel>) zhuBoContent.getData().getData());
+
+                                break;
+                            case UP:
+                                adapter.addDatas((ArrayList<ZhuBoContentModel>) zhuBoContent.getData().getData());
+                                break;
+                        }
+                        mPullToRefreshRecyclerView.onRefreshComplete();
 
                         Log.e(TAG, "onResponse: "+ zhuBoContent.getData().getData().toString());
 
@@ -78,7 +115,14 @@ public class SaiShiZhuBoActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initView() {
-        mRecycler = (RecyclerView) findViewById(R.id.saishi_zhubo_content_recycler);
+        mPullToRefreshRecyclerView = (PullToRefreshRecyclerView) findViewById(R.id.saishi_zhubo_content_recycler);
+        mPullToRefreshRecyclerView.setOnRefreshListener(this);
+        loadingLayoutProxy = mPullToRefreshRecyclerView.getLoadingLayoutProxy(true, false);
+        loadingLayoutProxy.setRefreshingLabel("刷新完成");
+        loadingLayoutProxy.setReleaseLabel("正在加载，耐心等待！");
+
+
+        mRecycler = mPullToRefreshRecyclerView.getRefreshableView();
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         mRecycler.setLayoutManager(layoutManager);
         adapter = new ZhuBoContentAdapter();
@@ -106,5 +150,19 @@ public class SaiShiZhuBoActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("url",UrlUtils.IMAGE_BASE_URL+roomId);
         Log.e(TAG, "onItemClick: "+UrlUtils.IMAGE_BASE_URL+roomId);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+        loadingLayoutProxy.setLastUpdatedLabel(format);
+        setupView(State.DOWN);
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+        setupView(State.UP);
+    }
+    enum State{
+        DOWN,UP
     }
 }

@@ -1,7 +1,9 @@
 package com.example.phone.zhibotv;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import com.example.phone.zhibotv.adapters.DbAdapter;
 import com.example.phone.zhibotv.model.History;
 
 import org.xutils.DbManager;
+import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
 import org.xutils.x;
 
@@ -27,7 +31,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class SearchActivity extends AppCompatActivity implements View.OnClickListener,DbAdapter.OnEveryitemClick {
     private static final String TAG = SearchActivity.class.getSimpleName();
    public DbManager.DaoConfig config=new DbManager.DaoConfig()
            .setDbName("historys.db")
@@ -40,7 +44,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private DbAdapter adaoter;
     private ListView mListView;
     private TextView empty;
-
+    private LinearLayout mAlldelete;
+    private ImageView mDelete;
+    private  AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_search);
         initView();
         setupView();
+        intitDialog();
     }
 
     private void initView() {
@@ -56,11 +63,15 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         msearchEd = (EditText) findViewById(R.id.search_ed);
         mSearch = (ImageView) findViewById(R.id.search_search);
         empty = (TextView) findViewById(R.id.search_empty);
+        mAlldelete = (LinearLayout) findViewById(R.id.delete_history);
+        mDelete = (ImageView) findViewById(R.id.delete_data);
+        mDelete.setOnClickListener(this);
         mSearch.setOnClickListener(this);
         mBack.setOnClickListener(this);
         adaoter = new DbAdapter(this,null);
         mListView.setAdapter(adaoter);
-        mListView.setOnItemClickListener(this);
+        adaoter.setEveryitemClick(this);
+       // mListView.setOnItemClickListener(this);
     }
 
     private void setupView() {
@@ -68,9 +79,14 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         try {
          List<History> data = db.selector(History.class).findAll();
             if (data!=null&&data.size()!=0) {
+                mAlldelete.setVisibility(View.VISIBLE);
                 adaoter.updataRes(data);
+
             }else {
+                mAlldelete.setVisibility(View.GONE);
                 mListView.setEmptyView(empty);
+                adaoter.updataRes(data);
+
             }
         } catch (DbException e) {
             e.printStackTrace();
@@ -127,12 +143,52 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                     Log.e(TAG, "onClick: "+e );
                     e.printStackTrace();
                 }
+                 setupView();
+                break;
+            case R.id.delete_data:
+                DbManager db1=x.getDb(config);
+                alertDialog.show();
 
-                setupView();
         }
     }
+    private void intitDialog() {
+        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setIcon(R.mipmap.kelian);
+        builder.setTitle("删除");
+        builder.setMessage("你确定要全部删除吗？？");
+        builder.setCancelable(false);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DbManager db = x.getDb(config);
+                try {
+                    List<History> all = db.selector(History.class).findAll();
+                    for (History date:all) {
+                        db.delete(date);
+                    }
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
 
+                setupView();
+
+            }
+
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog=builder.create();
+    }
     @Override
+    protected void onResume() {
+        super.onResume();
+         setupView();
+    }
+/* @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.e(TAG, "onItemClick: " );
        DbManager db=x.getDb(config);
@@ -145,5 +201,30 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             e.printStackTrace();
         }
 
+    }*/
+
+    @Override
+    public void sendtext(int id) {
+        Log.e(TAG, "onItemClick: " );
+        DbManager db=x.getDb(config);
+        try {
+            List<History>data= db.selector(History.class).where("id","=",id).findAll();
+            msearchEd.setText(data.get(0).getRoomid());
+            Log.e(TAG, "onItemClick: " );
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void senddelete(int id) {
+        DbManager db=x.getDb(config);
+        WhereBuilder builder=WhereBuilder.b("id","=",id);
+        try {
+            db.delete(History.class,builder);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        setupView();
     }
 }

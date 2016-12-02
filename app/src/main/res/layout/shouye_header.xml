@@ -33,12 +33,22 @@
             >
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/zhubo"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/shouye_header_vp"
+        android:text="主播推荐"
+        android:textSize="15sp"
+        android:gravity="center_vertical"
+        android:textColor="#546ff4"
+        android:padding="5dp"/>
     <HorizontalScrollView
         android:id="@+id/shouye_header_hsv"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:scrollbars="none"
-        android:layout_below="@id/shouye_header_vp">
+        android:layout_below="@id/zhubo">
 
         <LinearLayout
             android:id="@+id/ll_contianer"

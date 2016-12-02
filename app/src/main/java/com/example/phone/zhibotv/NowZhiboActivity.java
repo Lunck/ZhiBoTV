@@ -1,6 +1,7 @@
 package com.example.phone.zhibotv;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.phone.zhibotv.adapters.NowAdapter;
+import com.example.phone.zhibotv.model.Chazhao;
 import com.example.phone.zhibotv.model.NowModel;
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
@@ -17,8 +19,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.xutils.DbManager;
+import org.xutils.ex.DbException;
+import org.xutils.x;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -39,6 +46,12 @@ public class NowZhiboActivity extends AppCompatActivity implements View.OnClickL
     private Date date;
     private String dateStr;
     private int totalpage;
+    public DbManager.DaoConfig config=new DbManager.DaoConfig()
+            .setDbName("historys.db")
+            .setAllowTransaction(true)
+            .setDbDir(Environment.getExternalStorageDirectory())
+            .setDbVersion(1);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +78,29 @@ public class NowZhiboActivity extends AppCompatActivity implements View.OnClickL
 
                     @Override
                     public void onResponse(String response, int id) {
+                        DbManager db= x.getDb(config);
+                        Chazhao chazhao=new Chazhao();
                         Gson gson=new Gson();
                         Log.e(TAG, "onResponse: NowAdapter"+response );
                         NowModel nowModel=gson.fromJson(response,NowModel.class);
                         totalpage = nowModel.getData().getTotalpage();
+                        for (int i = 0; i < nowModel.getData().getData().size(); i++) {
+                            chazhao.setRoomid(nowModel.getData().getData().get(i).getRoomId());
+                            chazhao.setNickname(nowModel.getData().getData().get(i).getNickname());
+                            chazhao.setTitle(nowModel.getData().getData().get(i).getTitle());
+                            try {
+                                List<Chazhao> huizong=db.selector(Chazhao.class).where("roomid","=",nowModel.getData().getData().get(i).getRoomId()).findAll();
+                                boolean b=(huizong==null);
+                                Log.e(TAG, "onResponse: "+b );
+                                if (huizong==null||huizong.size()==0) {
+                                    db.saveOrUpdate(chazhao);
+                                }
+
+                            } catch (DbException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
                         switch (state) {
                             case DOWN:
                                 adapter.updataRes(nowModel.getData().getData());

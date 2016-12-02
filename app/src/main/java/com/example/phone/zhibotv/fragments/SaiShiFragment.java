@@ -1,5 +1,7 @@
 package com.example.phone.zhibotv.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,18 +10,24 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import com.example.phone.zhibotv.BaseFragment;
 import com.example.phone.zhibotv.R;
+import com.example.phone.zhibotv.SearchActivity;
+import com.rock.qrcodelibrary.CaptureActivity;
 
 /**
  * Created by Administrator on 2016-11-26.
  */
-public class SaiShiFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener {
+public class SaiShiFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
     public static final String TAG=SaiShiFragment.class.getSimpleName();
+    private static final int REQUEST_CODE = 99;
     private RadioGroup mRadiogroup;
     private Fragment showFragment;
+    private ImageView mSearch;
+    private ImageView mSaoYiSao;
 
     @Nullable
     @Override
@@ -42,6 +50,12 @@ public class SaiShiFragment extends BaseFragment implements RadioGroup.OnChecked
         showFragment = new SaiShiOneFragment();
         transaction.add(R.id.saishi_fragment,showFragment,SaiShiOneFragment.TAG);
         transaction.commit();
+
+        mSearch = ((ImageView) inflate.findViewById(R.id.saishi_search));
+        mSaoYiSao = ((ImageView) inflate.findViewById(R.id.saishi_saoyisao));
+        mSearch.setOnClickListener(this);
+        mSaoYiSao.setOnClickListener(this);
+
 
     }
 
@@ -77,5 +91,28 @@ public class SaiShiFragment extends BaseFragment implements RadioGroup.OnChecked
         }
         transaction.commit();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.saishi_search:
+                Intent intent1 = new Intent(getActivity(), SearchActivity.class);
+                getActivity().startActivity(intent1);
+                break;
+
+            case R.id.saishi_saoyisao:
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                getActivity().startActivityForResult(intent,REQUEST_CODE);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==REQUEST_CODE&&resultCode== Activity.RESULT_OK) {
+            String extra = data.getStringExtra(CaptureActivity.RESULT);
+        }
     }
 }

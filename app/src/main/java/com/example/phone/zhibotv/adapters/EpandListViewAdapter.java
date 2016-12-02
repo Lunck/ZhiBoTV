@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -150,7 +151,7 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
         Picasso.with(holder.smallimg1.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getPicUrl())
                 .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.jiazaizhong)
+                .error(R.mipmap.lp_defult_avatar)
                 .transform(new CropCircleTransformation())
                 .into(holder.smallimg1);
         Log.e(TAG, "getChildView: "+"http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition).getPicUrl());
@@ -162,7 +163,7 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
         Picasso.with(holder.smallimg2.getContext())
                 .load("http://www.zhibo.tv"+data.get(groupPosition).getData().get(2*childPosition+1).getPicUrl())
                 .placeholder(R.drawable.common_loading3)
-                .error(R.mipmap.jiazaizhong)
+                .error(R.mipmap.lp_defult_avatar)
                 .transform(new CropCircleTransformation())
                 .into(holder.smallimg2);
         holder.title1.setText(getChild(groupPosition,2*childPosition).getTitle());
@@ -239,11 +240,12 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
         return true;
     }
     private static class ViewHolderParent{
-        TextView name,gengduo;
+        TextView name;
+        LinearLayout gengduo;
 
         public ViewHolderParent(View itemView){
             name = (TextView) itemView.findViewById(R.id.shouye_lv_item_tv);
-            gengduo= (TextView) itemView.findViewById(R.id.item_item_gengduo);
+            gengduo= (LinearLayout) itemView.findViewById(R.id.item_item_gengduo);
 
         }
     }

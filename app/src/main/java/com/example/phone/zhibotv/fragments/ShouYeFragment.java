@@ -127,7 +127,7 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
                             Picasso.with(mLlimg.getContext())
                                     .load("http://www.zhibo.tv"+list.get(i).getPicUrl())
                                     .placeholder(R.drawable.common_loading3)
-                                    .error(R.mipmap.jiazaizhong)
+                                    .error(R.mipmap.lp_defult_avatar)
                                     .transform(new CropCircleTransformation())
                                     .into(mLlimg);
                             mLlText1.setText(list.get(i).getNickname());
