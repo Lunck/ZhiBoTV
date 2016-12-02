@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
@@ -47,7 +46,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 /**
  * Created by Administrator on 2016-11-26.
  */
-public class MyFragment extends BaseFragment implements View.OnClickListener,PlatformActionListener, RadioGroup.OnCheckedChangeListener,Handler.Callback {
+public class MyFragment extends BaseFragment implements View.OnClickListener,PlatformActionListener, RadioGroup.OnCheckedChangeListener {
     public static final String TAG = MyFragment.class.getSimpleName();
     private TextView mText;
 
@@ -101,7 +100,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener,Pla
 
     private void initView() {
         mText.setOnClickListener(this);
-        mHandler = new Handler(this);
         mImage1 = ((ImageView) inflate.findViewById(R.id.denglu_tiaozhuan));
         mImage1.setOnClickListener(this);
 
@@ -245,13 +243,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener,Pla
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         Log.e(TAG, "onComplete: userId=" + platform.getDb().getUserId());
 
-        Bundle bundle = new Bundle();
-        bundle.putString("icon", platform.getDb().getUserIcon());
-        bundle.putString("name", platform.getDb().getUserName());
-        Message msg = mHandler.obtainMessage();
-        msg.what = 0x100;
-        msg.obj = bundle;
-        mHandler.sendMessage(msg);
+        SharedPreferences preferences = getActivity().getSharedPreferences("pass_on",
+                getActivity().MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name", platform.getDb().getUserName());
+        editor.putString("icon", platform.getDb().getUserIcon());
+        editor.putBoolean("isDengLu", true);
+        editor.commit();
+
     }
 
 
@@ -300,7 +299,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener,Pla
         menuWindow.showAtLocation(getActivity().findViewById(R.id.main), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
-    @Override
+    /*@Override
     public boolean handleMessage(Message msg) {
         if (msg.what == 0x100) {
                 Bundle bundle = (Bundle) msg.obj;
@@ -313,7 +312,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener,Pla
                 isDenglu=true;
         }
         return false;
-    }
+    }*/
     /*@Override
     public void onclickListener(int position) {
         SharedPreferences sharePreferences = getActivity().getSharedPreferences("pass_in", getActivity().MODE_PRIVATE);
