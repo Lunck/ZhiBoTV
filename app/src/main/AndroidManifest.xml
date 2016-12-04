@@ -60,6 +60,7 @@
         <activity android:name=".SaiShiZhuBoActivity" />
         <activity android:name=".SaiShiWebActivity" />
         <activity android:name=".HostActivity" />
+        <activity android:name=".SaoWebActivity"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
