@@ -6,7 +6,6 @@ import com.example.phone.zhibotv.model.MessageModel;
  * Created by Administrator on 2016/11/29.
  */
 public class MessageEvent {
-    //public static final int PASS_WORD = 100;
     private MessageModel model;
     //public final int what;
     /*public MessageEvent(int what) {

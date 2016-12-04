@@ -1,5 +1,6 @@
 package com.example.phone.zhibotv.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,12 +15,12 @@ import android.widget.TextView;
 
 import com.example.phone.zhibotv.BaseFragment;
 import com.example.phone.zhibotv.R;
+import com.example.phone.zhibotv.SaoWebActivity;
 import com.example.phone.zhibotv.SearchActivity;
 import com.example.phone.zhibotv.SwipActivity;
 import com.example.phone.zhibotv.model.BigGuanZhuModel;
 import com.example.phone.zhibotv.utils.UrlUtils;
 import com.google.gson.Gson;
-
 import com.rock.qrcodelibrary.CaptureActivity;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -35,7 +36,6 @@ import okhttp3.Response;
 public class GuanZhuFragemnt extends BaseFragment implements View.OnClickListener {
     public static final String TAG=GuanZhuFragemnt.class.getSimpleName();
     private static final int QR_REQUEST_CODE = 100;
-    private static final int RESULT_OK = 101;
     private LinearLayout mLinearLayout;
     private  LinearLayout.LayoutParams params;
     private ImageView mSwip;
@@ -151,14 +151,45 @@ public class GuanZhuFragemnt extends BaseFragment implements View.OnClickListene
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        Log.e(TAG, "onActivityResult:  我走到了这里 1" );
+        if (resultCode == Activity.RESULT_OK) {
             if (requestCode == QR_REQUEST_CODE) {
                 String extra = data.getStringExtra(CaptureActivity.RESULT);
-                Intent intent = new Intent(getActivity(), SwipActivity.class);
+                Intent intent = new Intent(getActivity(), SaoWebActivity.class);
                 intent.putExtra("result",extra);
                 startActivity(intent);
+            /*    SwipEvent event = new SwipEvent(110);
+                event.setMsg(extra);
+                Log.e(TAG, "onActivityResult: 我走到了这里" );
+                EventBus.getDefault().postSticky(event);*/
             }
         }
-
     }
+    /*@Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    public void onEvent(SwipEvent event){
+        switch (event.what) {
+            case 110:
+                Intent intent = new Intent(getActivity(), SaoWebActivity.class);
+                intent.putExtra("result",event.getMsg());
+                Log.e(TAG, "onEvent: "+event.getMsg() );
+                startActivity(intent);
+                break;
+        }
+
+    }*/
+   /* @Override
+    public void onResume() {
+        super.onResume();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }*/
 }
