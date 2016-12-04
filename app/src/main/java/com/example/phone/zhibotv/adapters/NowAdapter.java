@@ -155,6 +155,9 @@ public class NowAdapter extends BaseAdapter {
                 intent.putExtra("roomid", data.get(2 * position).getRoomId());
                 intent.putExtra("title", data.get(2 * position).getTitle());
                 intent.putExtra("status", data.get(2 * position).getLiveStatus());
+                intent.putExtra("uid",data.get(2*position).getUid());
+                intent.putExtra("picurl",data.get(2*position).getPicUrl());
+                intent.putExtra("nickname",data.get(2*position).getNickname());
                 context.startActivity(intent);
             }
         });
@@ -166,6 +169,9 @@ public class NowAdapter extends BaseAdapter {
                 intent.putExtra("roomid", data.get(2 * position + 1).getRoomId());
                 intent.putExtra("title", data.get(2 * position + 1).getTitle());
                 intent.putExtra("status", data.get(2 * position + 1).getLiveStatus());
+                intent.putExtra("uid",data.get(2*position+1).getUid());
+                intent.putExtra("picurl",data.get(2*position+1).getPicUrl());
+                intent.putExtra("nickname",data.get(2*position+1).getNickname());
                 context.startActivity(intent);
             }
         });

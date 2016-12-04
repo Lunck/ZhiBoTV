@@ -1,5 +1,6 @@
 package com.example.phone.zhibotv.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -50,7 +51,6 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
     public static final String TAG=ShouYeFragment.class.getSimpleName();
     public static final String THEADER_URL="http://www.zhibo.tv/app/index/home";
     private static final int QR_REQUEST_CODE = 100;
-    private static final int RESULT_OK = 101;
     private XExpandListview mListView;
     private View mHeader;
     private ViewPager mViewPager;
@@ -58,7 +58,7 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
     private LinearLayout mIndicators;
     private HorizontalScrollView mHvs;
     private List<ImageView> mImager;
-    private int previndex=0;
+    private int previndex;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -142,7 +142,9 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
                                     Intent intent=new Intent(getActivity(), HostActivity.class);
                                     intent.putExtra("roomid",list.get(finalI).getRoomId());
                                     intent.putExtra("title",list.get(finalI).getTitle());
-
+                                    intent.putExtra("uid",list.get(finalI).getUid());
+                                    intent.putExtra("picurl",list.get(finalI).getPicUrl());
+                                    intent.putExtra("nickname",list.get(finalI).getNickname());
                                     startActivity(intent);
                                 }
                             });
@@ -200,6 +202,8 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
                                 child.setTitle(shouyeModel.getData().getCategory().get(i).getData().get(j).getTitle());
                                 child.setRoomId(shouyeModel.getData().getCategory().get(i).getData().get(j).getRoomId());
                                 child.setLiveStatus(shouyeModel.getData().getCategory().get(i).getData().get(j).getLiveStatus());
+                                child.setUid(shouyeModel.getData().getCategory().get(i).getData().get(j).getUid());
+
                                 children.add(child);
                                 chazhao.setRoomid(shouyeModel.getData().getCategory().get(i).getData().get(j).getRoomId());
                                 chazhao.setNickname(shouyeModel.getData().getCategory().get(i).getData().get(j).getNickname());
@@ -279,8 +283,8 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
                             @Override
                             public void onPageSelected(int position) {
                                 mText.setText(srcoll.get(position).getTitle());
-                                mIndicators.getChildAt(position).setBackgroundResource(R.mipmap.dot_enable);
-                                mIndicators.getChildAt(previndex).setBackgroundResource(R.mipmap.dot_normal);
+                                mIndicators.getChildAt(previndex).setBackgroundResource(R.mipmap.dot_enable);
+                                mIndicators.getChildAt(position).setBackgroundResource(R.mipmap.dot_normal);
                                 previndex=position;
 
                             }
@@ -418,7 +422,7 @@ public class ShouYeFragment extends BaseFragment implements ExpandableListView.O
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             if (requestCode == QR_REQUEST_CODE) {
                 String extra = data.getStringExtra(CaptureActivity.RESULT);
                 mText.setText(extra);

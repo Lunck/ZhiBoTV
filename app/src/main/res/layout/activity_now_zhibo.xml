@@ -25,7 +25,11 @@
             android:layout_weight="1"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:gravity="center_vertical"/>
+            android:paddingLeft="130dp"
+            android:gravity="center_vertical"
+            android:text="nihao"
+            android:textSize="15sp"
+            android:textColor="#ffff"/>
     </LinearLayout>
 <com.handmark.pulltorefresh.library.PullToRefreshListView
     android:id="@+id/now_lv"

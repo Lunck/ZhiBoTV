@@ -9,5 +9,19 @@
     <string name="xlistview_header_last_time">上次更新时间：</string>
     <string name="xlistview_footer_hint_normal">查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
+<string-array name="zimu">
+    <item>成功连接服务器</item>
+    <item>主播来一首</item>
+    <item>说的什么啊</item>
+    <item>我爱八阿哥</item>
+    <item>滚吧</item>
+    <item>66666666666</item>
+    <item>我就是来坑的</item>
+    <item>坑怎么了，坑的又不是你自己</item>
+    <item>动起来，燥起来</item>
+    <item>不要脸</item>
+    <item>死全家</item>
+    <item>是谁把够给放出来了</item>
+</string-array>
 
 </resources>

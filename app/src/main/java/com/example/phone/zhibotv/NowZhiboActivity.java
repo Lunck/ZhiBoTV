@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.phone.zhibotv.adapters.NowAdapter;
 import com.example.phone.zhibotv.model.Chazhao;
@@ -51,6 +52,7 @@ public class NowZhiboActivity extends AppCompatActivity implements View.OnClickL
             .setAllowTransaction(true)
             .setDbDir(Environment.getExternalStorageDirectory())
             .setDbVersion(1);
+    private TextView mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +122,8 @@ public class NowZhiboActivity extends AppCompatActivity implements View.OnClickL
         Intent intent=getIntent();
         id = intent.getIntExtra("id",0);
         mBack = (ImageView) findViewById(R.id.now_back);
+        mTitle = (TextView) findViewById(R.id.now_title);
+        mTitle.setText(intent.getStringExtra("title"));
         mRefresh = (PullToRefreshListView) findViewById(R.id.now_lv);
         mRefresh.setOnRefreshListener(this);
         mRefresh.setMode(PullToRefreshBase.Mode.BOTH);

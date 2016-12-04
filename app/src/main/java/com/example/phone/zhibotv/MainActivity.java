@@ -1,6 +1,7 @@
 package com.example.phone.zhibotv;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -47,11 +48,16 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private boolean isExit;
     private boolean isDenglu=false;
     private RadioButton mRb;
+    private SharedPreferences yonghu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        yonghu = getSharedPreferences("yonghu", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = yonghu.edit();
+        edit.putBoolean("isDenglu",false);
+        edit.commit();
         initView();
         setUpView();
     }
@@ -225,5 +231,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        SharedPreferences yonghu = getSharedPreferences("yonghu", MODE_PRIVATE);
+        SharedPreferences.Editor edit = yonghu.edit();
+        edit.putBoolean("isDenglu",false);
+        edit.commit();
     }
 }

@@ -122,6 +122,7 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Intent intent=new Intent(context, NowZhiboActivity.class);
                 intent.putExtra("id",data.get(groupPosition).getId());
+                intent.putExtra("title",data.get(groupPosition).getName());
                 context.startActivity(intent);
             }
         });
@@ -216,6 +217,9 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
                 intent.putExtra("roomid",data.get(groupPosition).getData().get(2*childPosition).getRoomId());
                 intent.putExtra("title",data.get(groupPosition).getData().get(2*childPosition).getTitle());
                 intent.putExtra("status",data.get(groupPosition).getData().get(2*childPosition).getLiveStatus());
+                intent.putExtra("uid",data.get(groupPosition).getData().get(2*childPosition).getUid());
+                intent.putExtra("picurl",data.get(groupPosition).getData().get(2*childPosition).getPicUrl());
+                intent.putExtra("nickname",data.get(groupPosition).getData().get(2*childPosition).getNickname());
                 context.startActivity(intent);
             }
         });
@@ -227,6 +231,10 @@ public class EpandListViewAdapter extends BaseExpandableListAdapter {
                 intent.putExtra("roomid",data.get(groupPosition).getData().get(2*childPosition+1).getRoomId());
                 intent.putExtra("title",data.get(groupPosition).getData().get(2*childPosition+1).getTitle());
                 intent.putExtra("status",data.get(groupPosition).getData().get(2*childPosition+1).getLiveStatus());
+                intent.putExtra("uid",data.get(groupPosition).getData().get(2*childPosition+1).getUid());
+                Log.e(TAG, "onClick: "+data.get(groupPosition).getData().get(2*childPosition+1).getUid() );
+                intent.putExtra("picurl",data.get(groupPosition).getData().get(2*childPosition+1).getPicUrl());
+                intent.putExtra("nickname",data.get(groupPosition).getData().get(2*childPosition+1).getNickname());
                 context.startActivity(intent);
             }
         });
